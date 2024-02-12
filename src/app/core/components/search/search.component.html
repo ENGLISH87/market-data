@@ -1,0 +1,24 @@
+<div class="search">
+  <input
+    class="bg-white dark:bg-black border border-gray-200 dark:border-gray-700 dark:text-white"
+    type="text"
+    placeholder="search markets..."
+    [formControl]="searchCtrl"
+    [matAutocomplete]="autoComplete"
+  />
+  <mat-icon class="dark:text-white">search</mat-icon>
+  <mat-autocomplete
+    #autoComplete
+    panelWidth="500px"
+    class="search-autocomplete"
+    [displayWith]="displayFn"
+    (optionSelected)="selectTicker($event)"
+  >
+    @for (opt of options$ | async; track opt) {
+      <mat-option [value]="opt">
+        <span class="ticker">{{ opt.ticker }}</span> //
+        <span class="name">{{ opt.name }}</span>
+      </mat-option>
+    }
+  </mat-autocomplete>
+</div>

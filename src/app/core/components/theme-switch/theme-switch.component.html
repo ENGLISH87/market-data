@@ -1,0 +1,10 @@
+@if ({ dm: darkMode$ | async }; as data) {
+  <mat-button-toggle-group (change)="toggle($event.value)">
+    <mat-button-toggle [value]="false" [checked]="!data.dm" aria-label="Light Mode">
+      <mat-icon>light_mode</mat-icon>
+    </mat-button-toggle>
+    <mat-button-toggle [value]="true" [checked]="data.dm" aria-label="Dark Mode">
+      <mat-icon>nightlight</mat-icon>
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+}

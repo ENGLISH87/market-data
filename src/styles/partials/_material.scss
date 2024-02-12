@@ -1,0 +1,8 @@
+body.dark {
+  --mat-standard-button-toggle-background-color: theme(colors.gray.900);
+  --mat-standard-button-toggle-state-layer-color: black;
+  --mat-standard-button-toggle-selected-state-background-color: theme(colors.gray.700);
+  --mat-standard-button-toggle-text-color: theme(colors.gray.50);
+  --mat-standard-button-toggle-selected-state-text-color: theme(colors.gray.50);
+  --mat-standard-button-toggle-divider-color: theme(colors.gray.700);
+}
