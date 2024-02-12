@@ -9,9 +9,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { debounceTime, Observable, of, switchMap } from 'rxjs';
-import { setSelectedTicker } from '../../../state/actions/market-data.actions';
+import { setCurrentTicker } from '../../../state/market-data/market-data.actions';
 import { ITickersResults } from '../../models/polygon.io.models';
-import { MarketDataService } from '../../services/market-data.service';
+import { MarketDataRestService } from '../../services/data-rest.service';
 
 @Component({
   selector: 'md-search',
@@ -28,7 +28,7 @@ export class SearchComponent implements OnInit {
   constructor(
     private router: Router,
     private store: Store,
-    private marketDataSvc: MarketDataService,
+    private marketDataSvc: MarketDataRestService,
   ) {}
 
   ngOnInit() {
@@ -40,7 +40,7 @@ export class SearchComponent implements OnInit {
 
   selectTicker(select: MatAutocompleteSelectedEvent) {
     const val: ITickersResults = select.option.value;
-    this.store.dispatch(setSelectedTicker({ t: val.ticker }));
+    this.store.dispatch(setCurrentTicker({ t: val.ticker }));
     this.router.navigate(['markets', val.ticker]);
   }
 

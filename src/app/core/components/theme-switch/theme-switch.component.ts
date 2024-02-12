@@ -4,8 +4,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
-import { toggleDarkMode } from '../../../state/actions/ui-settings.actions';
-import { selectIsDarkMode } from '../../../state/selectors/ui-settings.selectors';
+import { toggleDarkMode } from '../../../state/ui-settings/ui-settings.actions';
+import { selectIsDarkMode } from '../../../state/ui-settings/ui-settings.selectors';
 
 @Component({
   selector: 'md-theme-switch',

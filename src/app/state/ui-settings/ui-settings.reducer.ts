@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { toggleDarkMode } from '../actions/ui-settings.actions';
+import { toggleDarkMode } from './ui-settings.actions';
 
 export interface UiSettingsState {
   darkMode: boolean;

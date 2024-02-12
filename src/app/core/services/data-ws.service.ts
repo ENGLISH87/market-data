@@ -9,7 +9,7 @@ import { POLYGON_WEBSOCKET_CLIENT } from '../../app.config';
 @Injectable({
   providedIn: 'root',
 })
-export class DataWsService {
+export class MarketDataWsService {
   private _connected$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private _events$: Subject<IAggregateStockEvent> = new Subject();
   socket$: w3cwebsocket | undefined;

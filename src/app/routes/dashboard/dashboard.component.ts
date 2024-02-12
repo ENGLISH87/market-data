@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
-import { getStockFavourites } from '../../state/actions/market-data.actions';
+import { StandardTemplateComponent } from '../../core/templates/standard-template/standard-template.component';
+import { getStockFavourites } from '../../state/market-data/market-data.actions';
 
 @Component({
   selector: 'md-dashboard',
   standalone: true,
-  imports: [MatIconModule],
+  imports: [MatIconModule, StandardTemplateComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })

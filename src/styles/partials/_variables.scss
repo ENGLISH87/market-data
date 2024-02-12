@@ -1,3 +1,8 @@
+body {
+  --font-color: theme(colors.gray.400);
+}
+
 body.dark {
   --body-background: theme(colors.gray.950);
+  --font-color: rgba(141, 150, 170);
 }

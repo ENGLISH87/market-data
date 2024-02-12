@@ -1,8 +1,11 @@
 import { isDevMode } from '@angular/core';
 import { Action, ActionReducer, ActionReducerMap, MetaReducer } from '@ngrx/store';
 import { localStorageSync } from 'ngrx-store-localstorage';
-import { marketDataReducer, MarketDataState } from './reducers/market-data.reducer';
-import { uiSettingsReducer, UiSettingsState } from './reducers/ui-settings.reducer';
+import { marketDataReducer } from './market-data/market-data.reducers';
+import { MarketDataState } from './market-data/market-data.state';
+import { uiSettingsReducer, UiSettingsState } from './ui-settings/ui-settings.reducer';
+
+export * as marketDataEffects from './market-data/market-data.effects';
 
 export interface AppState {
   uiSettings: UiSettingsState;

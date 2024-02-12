@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SearchComponent } from '../search/search.component';
 
@@ -10,5 +10,7 @@ import { SearchComponent } from '../search/search.component';
   styleUrl: './nav.component.scss',
 })
 export class NavComponent {
+  @Input() title: string | undefined;
+
   constructor() {}
 }

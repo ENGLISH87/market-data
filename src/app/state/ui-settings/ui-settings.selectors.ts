@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { UiSettingsState } from '../reducers/ui-settings.reducer';
+import { UiSettingsState } from './ui-settings.reducer';
 
 export const selectMarketDataState = createFeatureSelector<UiSettingsState>('uiSettings');
 

@@ -1,18 +1,23 @@
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DecimalPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Params, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { setSelectedTicker } from '../../../../state/actions/market-data.actions';
-import { TickerData } from '../../../../state/reducers/market-data.reducer';
-import { selectCurrentTickerData } from '../../../../state/selectors/market-data.selectors';
+import { StandardTemplateComponent } from '../../../../core/templates/standard-template/standard-template.component';
+import {
+  getTickerSnapshot,
+  getTickerSummary,
+  setCurrentTicker,
+} from '../../../../state/market-data/market-data.actions';
+import { selectCurrentTickerData } from '../../../../state/market-data/market-data.selectors';
+import { TickerData } from '../../../../state/market-data/market-data.state';
 
 @Component({
   selector: 'md-stock',
   standalone: true,
-  imports: [MatIconModule, AsyncPipe, RouterModule],
+  imports: [RouterModule, StandardTemplateComponent, MatIconModule, AsyncPipe, DecimalPipe],
   templateUrl: './stock.component.html',
   styleUrl: './stock.component.scss',
 })
@@ -24,11 +29,13 @@ export class StockComponent {
     private store: Store,
     private route: ActivatedRoute,
   ) {
-    this.route.params
-      .pipe(takeUntilDestroyed())
-      .subscribe((params: Params) => (this.ticker = params['ticker']));
-
     this.data$ = this.store.select(selectCurrentTickerData);
-    this.store.dispatch(setSelectedTicker({ t: this.ticker! }));
+
+    this.route.params.pipe(takeUntilDestroyed()).subscribe((params: Params) => {
+      this.ticker = params['ticker'];
+      this.store.dispatch(setCurrentTicker({ t: this.ticker! }));
+      this.store.dispatch(getTickerSnapshot({ t: this.ticker! }));
+      this.store.dispatch(getTickerSummary({ t: this.ticker! }));
+    });
   }
 }
