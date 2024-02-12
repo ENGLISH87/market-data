@@ -2,6 +2,7 @@
   "$schema": "https://json.schemastore.org/stylelintrc",
   "extends": ["stylelint-config-recommended-scss"],
   "rules": {
+    "no-empty-source": null,
     "selector-type-no-unknown": [
       true,
       {

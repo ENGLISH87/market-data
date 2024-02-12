@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { StandardTemplateComponent } from './standard-template.component';
 
 describe('StandardTemplateComponent', () => {
@@ -8,10 +7,9 @@ describe('StandardTemplateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StandardTemplateComponent]
-    })
-    .compileComponents();
-    
+      imports: [StandardTemplateComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(StandardTemplateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
