@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { DataWsService } from './data-ws.service';
 
 describe('DataWsService', () => {

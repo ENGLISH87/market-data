@@ -1,6 +1,9 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { MarketDataState } from '../reducers/market-data.reducer';
 
-export const selectMarketDataState = createFeatureSelector<MarketDataState>('marketData');
+const selectState = createFeatureSelector<MarketDataState>('marketData');
 
-export const selectTicker = createSelector(selectMarketDataState, (state) => state.currentTicker);
+export const selectCurrentTicker = createSelector(selectState, (state) => state.currentTicker);
+export const selectCurrentTickerData = createSelector(selectState, (state) =>
+  state.currentTicker ? state.tickers[state.currentTicker!] : undefined,
+);

@@ -1,11 +1,11 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, Renderer2 } from '@angular/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
-import { selectIsDarkMode } from '../../../state/selectors/ui-settings.selectors';
-import { AsyncPipe } from '@angular/common';
 import { toggleDarkMode } from '../../../state/actions/ui-settings.actions';
+import { selectIsDarkMode } from '../../../state/selectors/ui-settings.selectors';
 
 @Component({
   selector: 'md-theme-switch',

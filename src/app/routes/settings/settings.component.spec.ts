@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { SettingsComponent } from './settings.component';
 
 describe('SettingsComponent', () => {
@@ -8,10 +7,9 @@ describe('SettingsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SettingsComponent]
-    })
-    .compileComponents();
-    
+      imports: [SettingsComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(SettingsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

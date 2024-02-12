@@ -1,17 +1,17 @@
 import { Inject, Injectable } from '@angular/core';
-import { ICloseEvent, IMessageEvent, w3cwebsocket } from 'websocket';
-import { POLYGON_WEBSOCKET_CLIENT } from '../../app.config';
-import { IAggregateStockEvent, IWebsocketClient } from '@polygon.io/client-js';
-import { BehaviorSubject, Observable, Subject, filter } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { IAggregateStockEvent, IWebsocketClient } from '@polygon.io/client-js';
+import { BehaviorSubject, filter, Observable, Subject } from 'rxjs';
+import { ICloseEvent, IMessageEvent, w3cwebsocket } from 'websocket';
 import { environment } from '../../../environments/environment';
+import { POLYGON_WEBSOCKET_CLIENT } from '../../app.config';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataWsService {
   private _connected$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  private _events$: Subject<any> = new Subject();
+  private _events$: Subject<IAggregateStockEvent> = new Subject();
   socket$: w3cwebsocket | undefined;
 
   constructor(

@@ -1,12 +1,12 @@
-import { ApplicationConfig, InjectionToken, importProvidersFrom } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { ApplicationConfig, importProvidersFrom, InjectionToken } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { routes } from './app.routes';
+import { provideRouter } from '@angular/router';
 import { provideStore } from '@ngrx/store';
-import { reducers, metaReducers } from './state';
+import { IRestClient, IWebsocketClient, restClient, websocketClient } from '@polygon.io/client-js';
 import { TimeagoModule } from 'ngx-timeago';
 import { environment } from '../environments/environment';
-import { IRestClient, IWebsocketClient, restClient, websocketClient } from '@polygon.io/client-js';
+import { routes } from './app.routes';
+import { metaReducers, reducers } from './state';
 
 export const POLYGON_CLIENT = new InjectionToken<IRestClient>('polygonRestClient');
 export const POLYGON_WEBSOCKET_CLIENT = new InjectionToken<IWebsocketClient>(
@@ -26,6 +26,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(TimeagoModule.forRoot()),
     provideAnimationsAsync(),
     provideRouter(routes),
-    provideStore(reducers, { metaReducers }), provideAnimationsAsync(),
+    provideStore(reducers, { metaReducers }),
+    provideAnimationsAsync(),
   ],
 };

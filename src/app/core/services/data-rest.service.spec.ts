@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { DataRestService } from './data-rest.service';
 
 describe('DataRestService', () => {

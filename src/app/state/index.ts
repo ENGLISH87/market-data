@@ -1,8 +1,8 @@
 import { isDevMode } from '@angular/core';
 import { Action, ActionReducer, ActionReducerMap, MetaReducer } from '@ngrx/store';
-import { MarketDataState, marketDataReducer } from './reducers/market-data.reducer';
-import { UiSettingsState, uiSettingsReducer } from './reducers/ui-settings.reducer';
 import { localStorageSync } from 'ngrx-store-localstorage';
+import { marketDataReducer, MarketDataState } from './reducers/market-data.reducer';
+import { uiSettingsReducer, UiSettingsState } from './reducers/ui-settings.reducer';
 
 export interface AppState {
   uiSettings: UiSettingsState;

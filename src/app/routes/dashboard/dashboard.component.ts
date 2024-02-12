@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
 import { getStockFavourites } from '../../state/actions/market-data.actions';
-import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'md-dashboard',

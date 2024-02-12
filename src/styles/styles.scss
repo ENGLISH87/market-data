@@ -6,6 +6,7 @@
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons+Outlined';
 @import 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,300,0,0';
 
+@import './partials/variables';
 @import './partials/material';
 
 html,
@@ -20,9 +21,7 @@ body {
 }
 
 body.dark {
-  background: rgb(23 23 324);
-  background: linear-gradient(135deg, rgb(25 30 32) 0%, rgb(45 54 57) 100%);
-  background-attachment: fixed;
+  background-color: var(--body-background);
 }
 
 .material-icons {

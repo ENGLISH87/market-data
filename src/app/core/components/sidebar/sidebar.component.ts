@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { ThemeSwitchComponent } from '../theme-switch/theme-switch.component';
-import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'md-sidebar',

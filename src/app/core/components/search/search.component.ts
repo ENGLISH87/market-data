@@ -7,11 +7,11 @@ import {
 } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { debounceTime, Observable, of, switchMap } from 'rxjs';
+import { setSelectedTicker } from '../../../state/actions/market-data.actions';
 import { ITickersResults } from '../../models/polygon.io.models';
 import { MarketDataService } from '../../services/market-data.service';
-import { Store } from '@ngrx/store';
-import { setSelectedTicker } from '../../../state/actions/market-data.actions';
 
 @Component({
   selector: 'md-search',

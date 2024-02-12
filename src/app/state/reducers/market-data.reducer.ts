@@ -9,7 +9,7 @@ export interface TickerData {
 }
 
 export interface MarketDataState {
-  tickers: Record<string, TickerData>;
+  tickers: Record<string, TickerData | undefined>;
   favourites: string[];
   currentTicker: string | undefined;
 }
