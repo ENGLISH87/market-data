@@ -1,0 +1,27 @@
+name: 'Setup'
+description: 'Setup Build Environment'
+
+inputs:
+  node_version:
+    required: false
+    default: v20.11.0
+    description: 'node version to use'
+  npm_version:
+    required: false
+    default: 8.19.3
+    description: 'NPM version to use'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node_version }}
+    - name: install npm
+      run: npm install -g npm@${{ inputs.npm_version }}
+      shell: bash
+
+    - name: Install Dependencies
+      run: npm ci --no-progress
+      shell: bash
