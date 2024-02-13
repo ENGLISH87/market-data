@@ -1,0 +1,19 @@
+.price-up {
+  color: rgb(18, 132, 64);
+  display: inline-block;
+  padding: 0 5px;
+  border-radius: 4px;
+
+  &:before {
+    content: '+';
+    display: inline-block;
+  }
+}
+
+.price-down {
+  // background-color: rgba(165, 14, 14, 0.3);
+  color: rgb(224, 0, 69);
+  padding: 0 5px;
+  display: inline-block;
+  border-radius: 4px;
+}

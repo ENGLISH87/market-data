@@ -1,0 +1,71 @@
+@if (data$ | async; as data) {
+  @if (data.summary && data.snapshot) {
+    <div class="w-full">
+      <div class="day bg-gray-400 dark:bg-black mb-6">
+        <button (click)="today = true" [class.active]="today">Today</button>
+        <button (click)="today = false" [class.active]="!today">Yesterday</button>
+      </div>
+      @if (today) {
+        <div class="flex flex-row w-full divide-x divide-solid divide-gray-500">
+          <div class="flex flex-col w-1/3">
+            <h3 class="text-xl">
+              @switch (data.snapshot.market_status) {
+                @case ('open') {
+                  Live
+                }
+                @case ('closed') {
+                  Market Closed
+                }
+                @case ('early_trading') {
+                  Early Trading
+                }
+                @case ('late_trading') {
+                  Late Trading
+                }
+              }
+            </h3>
+            <p class="font-semibold text-2xl dark:text-white py-2">
+              {{ data.snapshot.session?.price | currency }}
+            </p>
+            <p [mdPrice]="data.snapshot.session?.change">
+              {{ data.snapshot.session?.change }}
+              ({{ data.snapshot.session?.change_percent }}%)
+            </p>
+          </div>
+          <div class="flex flex-col w-1/3 pl-9">
+            <h3 class="text-xl">Previous Close</h3>
+            <p class="font-semibold text-2xl dark:text-white py-2">
+              {{ data.snapshot.session?.previous_close | currency }}
+            </p>
+            <p>June 16, 16:00</p>
+          </div>
+          <div class="flex flex-col w-1/3 pl-9">
+            <h3 class="text-xl">Open</h3>
+            <p class="font-semibold text-2xl dark:text-white py-2">
+              {{ data.snapshot.session?.open | currency }}
+            </p>
+            <p>June 17, 09:30</p>
+          </div>
+        </div>
+      } @else {
+        <div class="flex flex-row w-full divide-x divide-solid divide-gray-500">
+          <div class="flex flex-col w-1/3">
+            <h3 class="text-xl">Pre-market</h3>
+            <p class="font-semibold text-2xl dark:text-white py-2">$210.45</p>
+            <p [mdPrice]="-0.46">-0.46 (-1.05%)</p>
+          </div>
+          <div class="flex flex-col w-1/3 pl-9">
+            <h3 class="text-xl">Open</h3>
+            <p class="font-semibold text-2xl dark:text-white py-2">$137.54</p>
+            <p>June 16, 16:00</p>
+          </div>
+          <div class="flex flex-col w-1/3 pl-9">
+            <h3 class="text-xl">Close</h3>
+            <p class="font-semibold text-2xl dark:text-white py-2">$135.87</p>
+            <p>June 17, 09:30</p>
+          </div>
+        </div>
+      }
+    </div>
+  }
+}

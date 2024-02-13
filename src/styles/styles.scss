@@ -9,6 +9,7 @@
 
 @import './partials/variables';
 @import './partials/material';
+@import './partials/prices';
 
 html,
 body {
@@ -28,6 +29,6 @@ body.dark {
 
 .material-icons {
   font-size: 22px;
-  line-height: initial;
+  line-height: 24px;
   font-family: 'Material Symbols Outlined', 'Material Icons';
 }

@@ -3,11 +3,10 @@
     <div class="flex items-center justify-between">
       <div class="flex items-center justify-start rtl:justify-end">
         <button
-          data-drawer-target="logo-sidebar"
-          data-drawer-toggle="logo-sidebar"
+          (click)="toggle()"
           aria-controls="logo-sidebar"
           type="button"
-          class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+          class="inline-flex items-center p-2 mr-2 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
         >
           <span class="sr-only">Open sidebar</span>
           <svg
@@ -25,9 +24,7 @@
           </svg>
         </button>
 
-        <span
-          class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white"
-        >
+        <span class="text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
           {{ title }}
         </span>
       </div>
@@ -43,11 +40,7 @@
               data-dropdown-toggle="dropdown-user"
             >
               <span class="sr-only">Open user menu</span>
-              <img
-                class="w-8 h-8 rounded-full"
-                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                alt="user photo"
-              />
+              <img class="w-8 h-8 rounded-full" src="assets/images/me.jpeg" alt="user photo" />
             </button>
           </div>
           <div
@@ -55,9 +48,9 @@
             id="dropdown-user"
           >
             <div class="px-4 py-3" role="none">
-              <p class="text-sm text-gray-900 dark:text-white" role="none">Neil Sims</p>
+              <p class="text-sm text-gray-900 dark:text-white" role="none">Shaun English</p>
               <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                neil.sims-at-flowbite.com
+                shaun_english-at-hotmail.co.uk
               </p>
             </div>
             <ul class="py-1" role="none">
@@ -66,7 +59,7 @@
                   href="#"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                   role="menuitem"
-                  >Dashboard</a
+                  >Profile</a
                 >
               </li>
               <li>
@@ -75,14 +68,6 @@
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                   role="menuitem"
                   >Settings</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                  role="menuitem"
-                  >Earnings</a
                 >
               </li>
               <li>

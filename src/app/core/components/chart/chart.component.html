@@ -1,0 +1,20 @@
+<div class="chart-wrapper">
+  <div #chart></div>
+  @if ({ aggs: aggregates$ | async, events: realtime$ | async }; as data) {
+    @if (data.aggs) {
+      <mat-button-toggle-group
+        class="mt-2"
+        [value]="range$.value"
+        (change)="range$.next($event.value)"
+      >
+        <mat-button-toggle value="minute">1M</mat-button-toggle>
+        <mat-button-toggle value="hour">1H</mat-button-toggle>
+        <mat-button-toggle value="day">1D</mat-button-toggle>
+        <mat-button-toggle value="week">1W</mat-button-toggle>
+        <mat-button-toggle value="month">1M</mat-button-toggle>
+      </mat-button-toggle-group>
+    }
+  } @else {
+    <mat-spinner color="accent" diameter="30"></mat-spinner>
+  }
+</div>

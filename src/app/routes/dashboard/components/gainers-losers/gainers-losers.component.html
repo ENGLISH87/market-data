@@ -1,0 +1,41 @@
+<mat-tab-group>
+  <mat-tab label="Biggest Gainers">
+    <ng-template matTabContent>
+      @if (gainers$ | async; as gainers) {
+        @for (s of gainers$ | async; track $index) {
+          <div class="stock" [routerLink]="['/trade', s.ticker]">
+            <span>{{ s.ticker }}</span>
+            <span>{{ s.todaysChange | number: '1.2-2' }}</span>
+            <span [mdPrice]="s.todaysChangePerc">
+              {{ s.todaysChangePerc | number: '1.2-2' }}%
+            </span>
+          </div>
+        } @empty {
+          Currently unavailable
+        }
+      } @else {
+        <mat-spinner color="accent" diameter="30"></mat-spinner>
+      }
+    </ng-template>
+  </mat-tab>
+
+  <mat-tab label="Biggest Losers">
+    <ng-template matTabContent>
+      @if (losers$ | async; as losers) {
+        @for (s of losers; track $index) {
+          <div class="stock" [routerLink]="['/trade', s.ticker]">
+            <span>{{ s.ticker }} </span>
+            <span>{{ s.todaysChange | number: '1.2-2' }}</span>
+            <span [mdPrice]="s.todaysChangePerc">
+              {{ s.todaysChangePerc | number: '1.2-2' }}%
+            </span>
+          </div>
+        } @empty {
+          Currently unavailable
+        }
+      } @else {
+        <mat-spinner color="accent" diameter="30"></mat-spinner>
+      }
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
