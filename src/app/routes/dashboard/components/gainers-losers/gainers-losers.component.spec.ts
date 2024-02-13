@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { GainersLosersComponent } from './gainers-losers.component';
 
 describe('GainersLosersComponent', () => {
@@ -8,10 +7,9 @@ describe('GainersLosersComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GainersLosersComponent]
-    })
-    .compileComponents();
-    
+      imports: [GainersLosersComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(GainersLosersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

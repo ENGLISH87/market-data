@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { FavouritesTickerComponent } from './favourites-ticker.component';
 
 describe('FavouritesTickerComponent', () => {
@@ -8,10 +7,9 @@ describe('FavouritesTickerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FavouritesTickerComponent]
-    })
-    .compileComponents();
-    
+      imports: [FavouritesTickerComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(FavouritesTickerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
