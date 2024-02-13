@@ -1,0 +1,87 @@
+@if (data$ | async; as data) {
+  @if (data.summary && data.snapshot) {
+    <div class="flex flex-row w-full">
+      <div class="pr-5">
+        <a [href]="data.summary.homepage_url" target="_blank">
+          <img
+            class="rounded-md"
+            width="50"
+            [src]="data.summary.branding?.icon_url + '?apikey=im24yF6OYmi7d2fDCul_7sqJJLeZddbB'"
+            [alt]="data.summary.ticker"
+        /></a>
+      </div>
+      <section class="flex flex-col w-full">
+        <h2 class="text-3xl mb-2 dark:text-white">
+          {{ data.summary.name }} ({{ data.summary.ticker }})
+        </h2>
+        <p>
+          {{ data.summary.primary_exchange }}. 15min delayed feed. Currency in
+          <span class="uppercase">{{ data.summary.currency_name }}</span>
+        </p>
+        <div class="flex my-8">
+          <div class="w-1/2">
+            <p class="dark:text-white text-3xl">
+              43.99 <span class="text-base" [mdPrice]="0.3">0.13 (0.30%)</span>
+            </p>
+            <p>At close: data</p>
+          </div>
+          <div class="w-1/2">
+            @switch (data.snapshot.market_status) {
+              @case ('open') {
+                <p class="dark:text-white text-3xl">
+                  {{
+                    (data.snapshot.session?.open || 0) - (data.snapshot.session?.price || 0)
+                      | number: '1.2-2'
+                  }}
+                  <span class="text-base" [mdPrice]="data.snapshot.session?.change">
+                    {{ data.snapshot.session?.change }} ({{
+                      data.snapshot.session?.change_percent
+                    }}%)
+                  </span>
+                </p>
+                <p>Open: data</p>
+              }
+              @case ('closed') {
+                <p class="dark:text-white text-3xl">
+                  43.53 <span class="text-base" [mdPrice]="-0.46">-0.46 (-1.05%)</span>
+                </p>
+                <p>Close: data</p>
+              }
+              @case ('early_trading') {
+                <p class="dark:text-white text-3xl">
+                  {{
+                    (data.snapshot.session?.price || 0) -
+                      (data.snapshot.session?.early_trading_change || 0)
+                  }}
+                  <span class="text-base" [mdPrice]="data.snapshot.session?.early_trading_change">
+                    {{ data.snapshot.session?.early_trading_change }} ({{
+                      data.snapshot.session?.early_trading_change_percent
+                    }}%)
+                  </span>
+                </p>
+                <p>Early-trading: data</p>
+              }
+              @case ('late_trading') {
+                <p class="dark:text-white text-3xl">
+                  43.53 <span class="text-base" [mdPrice]="-0.46">-0.46 (-1.05%)</span>
+                </p>
+                <p>Late-trading: data</p>
+              }
+            }
+          </div>
+        </div>
+        <div>
+          @if (isFavourite$ | async) {
+            <button (click)="favourite(data.summary.ticker!, false)">Remove from watch list</button>
+          } @else {
+            <button (click)="favourite(data.summary.ticker!, true)">Add to watch list</button>
+          }
+        </div>
+      </section>
+    </div>
+  } @else {
+    loading...
+  }
+} @else {
+  loading...
+}

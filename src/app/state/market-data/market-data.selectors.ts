@@ -1,9 +1,26 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { MarketDataState } from './market-data.state';
+import { MarketDataState, TickerData } from './market-data.state';
 
-const selectState = createFeatureSelector<MarketDataState>('marketData');
+export const selectMarketDataState = createFeatureSelector<MarketDataState>('marketData');
 
-export const selectCurrentTicker = createSelector(selectState, (state) => state.currentTicker);
-export const selectCurrentTickerData = createSelector(selectState, (state) => {
-  return state.currentTicker ? state.tickers[state.currentTicker!] : undefined;
-});
+export const selectCurrentTicker = createSelector(
+  selectMarketDataState,
+  (state) => state.currentTicker,
+);
+
+export const selectCurrentTickerData = createSelector(selectMarketDataState, (state) =>
+  state.currentTicker ? state.tickers[state.currentTicker!] : undefined,
+);
+
+export const selectIsTickerFavourite = createSelector(
+  selectMarketDataState,
+  (state) => (state.currentTicker && state.favourites.includes(state.currentTicker)) || false,
+);
+
+export const selectFavouriteTickers = createSelector(
+  selectMarketDataState,
+  (state) =>
+    state.favourites
+      .map((key) => state.tickers[key])
+      .filter((value) => value !== undefined) as TickerData[],
+);

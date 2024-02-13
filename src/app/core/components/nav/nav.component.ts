@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { toggleSidebar } from '../../../state/ui-settings/ui-settings.actions';
 import { SearchComponent } from '../search/search.component';
 
 @Component({
@@ -12,5 +14,9 @@ import { SearchComponent } from '../search/search.component';
 export class NavComponent {
   @Input() title: string | undefined;
 
-  constructor() {}
+  constructor(private store: Store) {}
+
+  toggle() {
+    this.store.dispatch(toggleSidebar());
+  }
 }

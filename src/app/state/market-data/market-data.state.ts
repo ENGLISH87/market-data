@@ -2,9 +2,10 @@ import { IAggregateStockEvent, UniversalSnapshotInfo } from '@polygon.io/client-
 import { CandlestickData } from 'lightweight-charts';
 import { ITickerDetailsResults } from '../../core/models/polygon.io.models';
 import {
-  getTickerSnapshotSuccess,
+  getTickerSnapshotsSuccess,
   getTickerSummarySuccess,
   setCurrentTicker,
+  toggleTickerFavourite,
 } from './market-data.actions';
 
 export interface TickerData {
@@ -52,15 +53,22 @@ export const setTicker = (
 
 export const updateTickerSnapshot = (
   state: MarketDataState,
-  { snapshot }: ReturnType<typeof getTickerSnapshotSuccess>,
+  { snapshots }: ReturnType<typeof getTickerSnapshotsSuccess>,
 ): MarketDataState => ({
   ...state,
   tickers: {
     ...state.tickers,
-    [snapshot.ticker!]: {
-      ...state.tickers[snapshot.ticker!],
-      snapshot,
-    } as TickerData,
+    ...snapshots.reduce(
+      (acc, cur) => {
+        acc[cur.ticker!] = {
+          ...state.tickers[cur.ticker!],
+          snapshot: cur,
+        };
+
+        return acc;
+      },
+      {} as Record<string, TickerData>,
+    ),
   },
 });
 
@@ -77,3 +85,25 @@ export const updateTickerSummary = (
     } as TickerData,
   },
 });
+
+export const updateFavourites = (
+  state: MarketDataState,
+  { add, ticker }: ReturnType<typeof toggleTickerFavourite>,
+): MarketDataState => {
+  const match = state.favourites.indexOf(ticker);
+
+  if (add && match === -1) {
+    // const na = [...state.favourites, ticker];
+    return {
+      ...state,
+      favourites: [...state.favourites, ticker],
+    };
+  } else {
+    // const na = [...state.favourites.slice(0, match), ...state.favourites.slice(match + 1)];
+
+    return {
+      ...state,
+      favourites: [...state.favourites.slice(0, match), ...state.favourites.slice(match + 1)],
+    };
+  }
+};

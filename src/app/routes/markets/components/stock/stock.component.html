@@ -1,31 +1,36 @@
 <md-standard-template title="Market">
   @if (data$ | async; as data) {
     <div class="grid md:grid-cols-2 gap-6 mb-6">
-      <div class="flex items-center justify-center p-8 h-24 rounded">
-        <img
-          width="50"
-          [src]="data.summary?.branding?.icon_url + '?apikey=im24yF6OYmi7d2fDCul_7sqJJLeZddbB'"
-          [alt]="data.summary?.ticker"
-        />
-        <h2>{{ data.summary?.name }} ({{ data.summary?.ticker }})</h2>
-        <p>
-          {{ data.summary?.primary_exchange }}. 15min delayed price. Currency in
-          {{ data.summary?.currency_name }}
-        </p>
+      <div class="p-8 h-full rounded">
+        <md-stock-summary></md-stock-summary>
       </div>
-      <div class="flex items-center justify-center p-8 h-24 rounded bg-gray-50 dark:bg-gray-800">
-        <p class="text-2xl text-gray-400 dark:text-gray-500">Prev/Today</p>
+      <div class="p-8 h-full rounded bg-gray-50 dark:bg-gray-800">
+        <md-price-summary></md-price-summary>
       </div>
     </div>
 
     <div class="grid md:grid-cols-5 xl:grid-cols-6 gap-6 mb-6">
       <div
-        class="md:col-span-3 xl:col-span-4 p-8 flex items-center justify-center rounded bg-gray-50 h-full dark:bg-gray-800"
+        class="md:col-span-3 xl:col-span-4 py-3 px-8 rounded bg-gray-50 h-full overflow-y-auto dark:bg-gray-800"
       >
-        <p class="text-2xl text-gray-400 dark:text-gray-500">Charts / Tabs</p>
+        <mat-tab-group [preserveContent]="true" [mat-stretch-tabs]="false">
+          <mat-tab label="Chart">
+            @if (data.summary?.ticker) {
+              <md-chart [ticker]="data.summary?.ticker"></md-chart>
+            }
+          </mat-tab>
+          <mat-tab label="News">
+            <ng-template matTabContent>
+              @if (data.summary?.ticker) {
+                <md-news class="max-h-[470px]" [ticker]="data.summary?.ticker"></md-news>
+              }
+            </ng-template>
+          </mat-tab>
+          <mat-tab label="Historical"> todo </mat-tab>
+        </mat-tab-group>
       </div>
       <div
-        class="md:col-span-2 xl:col-span-2 p-8 flex flex-col rounded bg-gray-50 h-full dark:bg-gray-800"
+        class="md:col-span-2 xl:col-span-2 py-6 px-8 flex flex-col rounded bg-gray-50 h-full dark:bg-gray-800"
       >
         <h2 class="text-xl mb-5 dark:text-white">Summary</h2>
         <div class="flex flex-col w-full">
@@ -50,7 +55,7 @@
           </div>
           <div class="flex justify-between mb-6">
             <span class="uppercase">52 Week Range</span>
-            <span class="dark:text-white">unavailable</span>
+            <span class="dark:text-white">-</span>
           </div>
           <div class="flex justify-between mb-6">
             <span class="uppercase">Volume</span>
@@ -60,11 +65,27 @@
           </div>
           <div class="flex justify-between mb-6">
             <span class="uppercase">Avg. Volume</span>
-            <span class="dark:text-white">Value 3</span>
+            <span class="dark:text-white">-</span>
           </div>
           <div class="flex justify-between mb-6">
             <span class="uppercase">Market Cap</span>
-            <span class="dark:text-white">{{ data.summary?.market_cap | number }}</span>
+            <span class="dark:text-white">{{ data.summary?.market_cap | currency }}</span>
+          </div>
+          <div class="flex justify-between mb-6">
+            <span class="uppercase">SIC Code</span>
+            <span class="dark:text-white">{{ data.summary?.sic_code }}</span>
+          </div>
+          <div class="flex justify-between mb-6">
+            <span class="uppercase">SIC Desc.</span>
+            <span class="dark:text-white">{{ data.summary?.sic_description }}</span>
+          </div>
+          <div class="flex justify-between mb-6">
+            <span class="uppercase">Employees</span>
+            <span class="dark:text-white">{{ data.summary?.total_employees | number }}</span>
+          </div>
+          <div class="flex justify-between mb-6">
+            <span class="uppercase">Listed</span>
+            <span class="dark:text-white">{{ data.summary?.list_date | date }}</span>
           </div>
         </div>
       </div>

@@ -1,12 +1,14 @@
 import { createReducer, on } from '@ngrx/store';
-import { toggleDarkMode } from './ui-settings.actions';
+import { toggleDarkMode, toggleSidebar } from './ui-settings.actions';
 
 export interface UiSettingsState {
   darkMode: boolean;
+  showSidebar: boolean;
 }
 
 export const INITIAL_UI_STATE: UiSettingsState = {
   darkMode: false,
+  showSidebar: false,
 };
 
 export const uiSettingsReducer = createReducer(
@@ -18,6 +20,14 @@ export const uiSettingsReducer = createReducer(
     (state, { dark }): UiSettingsState => ({
       ...state,
       darkMode: dark,
+    }),
+  ),
+
+  on(
+    toggleSidebar,
+    (state): UiSettingsState => ({
+      ...state,
+      showSidebar: !state.showSidebar,
     }),
   ),
 );

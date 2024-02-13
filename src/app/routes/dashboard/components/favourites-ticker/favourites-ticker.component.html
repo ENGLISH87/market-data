@@ -1,0 +1,20 @@
+<div class="flex gap-8">
+  @for (fav of favourites$ | async; track $index) {
+    <a [routerLink]="['markets', fav.snapshot?.ticker]" class="flex flex-row">
+      <div class="pr-2">
+        <p class="font-semibold dark:text-white mb-2">{{ fav.snapshot?.ticker }}</p>
+        <p>{{ fav.snapshot?.session?.price | number: '1.2-2' }}</p>
+      </div>
+      <div>
+        <p class="whitespace-nowrap mb-2" [mdPrice]="fav.snapshot?.session?.change">
+          {{ fav.snapshot?.session?.change | number: '1.2-2' }} ({{
+            fav.snapshot?.session?.change_percent | number: '1.2-2'
+          }}%)
+        </p>
+        <p [mdPrice]="fav.snapshot?.session?.change">\/\/\</p>
+      </div>
+    </a>
+  } @empty {
+    loading...
+  }
+</div>

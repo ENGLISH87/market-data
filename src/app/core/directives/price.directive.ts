@@ -5,7 +5,7 @@ import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
   standalone: true,
 })
 export class PriceDirective {
-  @Input() set smdPrice(value: number | undefined) {
+  @Input() set mdPrice(value: number | undefined) {
     this.updateClasses(value);
   }
 

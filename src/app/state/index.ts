@@ -31,7 +31,7 @@ export function localStorageSyncReducer(
   actionReducer: ActionReducer<AppState>,
 ): ActionReducer<AppState> {
   return localStorageSync({
-    keys: ['uiSettings'],
+    keys: ['uiSettings', 'marketData'],
     rehydrate: true,
     restoreDates: false,
     storage: sessionStorage,

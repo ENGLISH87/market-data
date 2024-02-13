@@ -1,36 +1,26 @@
 <md-standard-template title="Dashboard">
-  <div class="flex items-center justify-center h-80 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-    <p class="text-2xl text-gray-400 dark:text-gray-500">
-      <mat-icon>add</mat-icon>
-    </p>
+  <div class="mb-4 p-4 rounded overflow-x-auto min-h-24 bg-gray-50 dark:bg-gray-800">
+    <md-favourites-ticker></md-favourites-ticker>
   </div>
-  <div class="grid grid-cols-2 gap-4 mb-4">
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-      <p class="text-2xl text-gray-400 dark:text-gray-500">
-        <mat-icon>add</mat-icon>
-      </p>
+
+  <div class="grid md:grid-cols-6 gap-4 mb-4">
+    <div class="md:col-span-4 p-4 rounded bg-gray-50 min-h-[500px] max-h-[500px] dark:bg-gray-800">
+      <md-gainers-losers></md-gainers-losers>
     </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-      <p class="text-2xl text-gray-400 dark:text-gray-500">
-        <mat-icon>add</mat-icon>
-      </p>
-    </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-      <p class="text-2xl text-gray-400 dark:text-gray-500">
-        <mat-icon>add</mat-icon>
-      </p>
-    </div>
-    <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-      <p class="text-2xl text-gray-400 dark:text-gray-500">
-        <mat-icon>add</mat-icon>
-      </p>
+    <div
+      class="md:col-span-2 p-4 overflow-y-auto rounded bg-gray-50 max-h-[500px] dark:bg-gray-800"
+    >
+      <h3 class="font-semibold text-2xl dark:text-white">Latest News</h3>
+      <md-news></md-news>
     </div>
   </div>
+
   <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
     <p class="text-2xl text-gray-400 dark:text-gray-500">
       <mat-icon>add</mat-icon>
     </p>
   </div>
+
   <div class="grid grid-cols-2 gap-4">
     <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
       <p class="text-2xl text-gray-400 dark:text-gray-500">

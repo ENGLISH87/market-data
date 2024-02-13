@@ -28,7 +28,13 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideRouter(routes),
     provideEffects(marketDataEffects),
-    provideStore(reducers, { metaReducers }),
+    provideStore(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictActionImmutability: true,
+        strictStateImmutability: true,
+      },
+    }),
     provideAnimationsAsync(),
   ],
 };

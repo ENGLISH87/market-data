@@ -1,3 +1,7 @@
+html {
+  --mat-standard-button-toggle-height: 30px;
+}
+
 body.dark {
   --mat-standard-button-toggle-background-color: theme(colors.gray.900);
   --mat-standard-button-toggle-state-layer-color: black;
@@ -5,4 +9,20 @@ body.dark {
   --mat-standard-button-toggle-text-color: theme(colors.gray.50);
   --mat-standard-button-toggle-selected-state-text-color: theme(colors.gray.50);
   --mat-standard-button-toggle-divider-color: theme(colors.gray.700);
+
+  .mat-mdc-tab-group {
+    --mdc-tab-indicator-active-indicator-color: theme(colors.cyan.200);
+    --mat-tab-header-disabled-ripple-color: rgba(0, 0, 0, 0.38);
+    --mat-tab-header-pagination-icon-color: theme(colors.gray.100);
+    --mat-tab-header-inactive-label-text-color: theme(colors.gray.100);
+    --mat-tab-header-active-label-text-color: theme(colors.cyan.200);
+    --mat-tab-header-active-ripple-color: theme(colors.cyan.200);
+    --mat-tab-header-inactive-ripple-color: theme(colors.cyan.200);
+    --mat-tab-header-inactive-focus-label-text-color: theme(colors.gray.100);
+    --mat-tab-header-inactive-hover-label-text-color: theme(colors.gray.100);
+    --mat-tab-header-active-focus-label-text-color: theme(colors.cyan.200);
+    --mat-tab-header-active-hover-label-text-color: theme(colors.cyan.200);
+    --mat-tab-header-active-focus-indicator-color: theme(colors.cyan.200);
+    --mat-tab-header-active-hover-indicator-color: theme(colors.cyan.200);
+  }
 }

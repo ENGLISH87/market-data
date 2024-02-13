@@ -1,0 +1,19 @@
+:host {
+  .day {
+    width: fit-content;
+    padding: 0.5rem;
+    border-radius: 8px;
+
+    button {
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-weight: 500;
+
+      @apply font-semibold;
+
+      &.active {
+        @apply dark:bg-cyan-200 dark:text-black;
+      }
+    }
+  }
+}
