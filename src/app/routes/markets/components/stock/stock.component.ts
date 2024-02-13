@@ -52,6 +52,7 @@ export class StockComponent {
 
       // TODO: simplify to single dispatch
       // load 52w data for o,c,h,l - https://polygon.io/quote/api/polygon/v2/aggs/ticker/{ticker}/range/53/week/{1yr ago}/{today}?sort=desc&limit=50000
+      /* eslint-disable @ngrx/avoid-dispatching-multiple-actions-sequentially */
       this.store.dispatch(subscribeToPriceEventsFactory(this.ticker!));
       this.store.dispatch(setCurrentTicker({ t: this.ticker! }));
       this.store.dispatch(getTickerSnapshot({ t: this.ticker! }));

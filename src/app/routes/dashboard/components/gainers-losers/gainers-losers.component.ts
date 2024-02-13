@@ -22,6 +22,7 @@ import { PriceDirective } from '../../../../core/directives/price.directive';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GainersLosersComponent {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   gainers$: Observable<any[]> = of([]);
   losers$: Observable<any[]> = of([]);
 }

@@ -43,7 +43,7 @@ export class ChartComponent {
   @ViewChild('chart', { static: false }) chartContainer!: ElementRef<HTMLDivElement>;
 
   range$ = new BehaviorSubject<Timespan>(Timespan.hour);
-  aggregates$: Observable<any> | undefined;
+  aggregates$: Observable<CandlestickData<Time>[]> | undefined;
   realtime$: Observable<IAggregateStockEvent> | undefined;
   chart: IChartApi | undefined;
   candlestickSeries: ISeriesApi<'Candlestick', Time, CandlestickData<Time>> | undefined;
