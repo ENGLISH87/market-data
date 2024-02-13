@@ -95,7 +95,7 @@ jobs:
           path: dist
 
       - name: Copy staticwebapp.config
-        run: cp staticwebapp.config.json ./dist/simple-market-data
+        run: cp staticwebapp.config.json ./dist/market-data/browser
 
       - name: Deploy to Azure
         uses: Azure/static-web-apps-deploy@v1
