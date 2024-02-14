@@ -26,3 +26,7 @@ body.dark {
     --mat-tab-header-active-hover-indicator-color: theme(colors.cyan.200);
   }
 }
+
+mat-tab-body {
+  @apply p-4;
+}

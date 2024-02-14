@@ -6,6 +6,7 @@ import { MarketDataState } from './market-data/market-data.state';
 import { uiSettingsReducer, UiSettingsState } from './ui-settings/ui-settings.reducer';
 
 export * as marketDataEffects from './market-data/market-data.effects';
+export * as uiEffects from './ui-settings/ui-settings.effects';
 
 export interface AppState {
   uiSettings: UiSettingsState;
@@ -31,10 +32,14 @@ export function localStorageSyncReducer(
   actionReducer: ActionReducer<AppState>,
 ): ActionReducer<AppState> {
   return localStorageSync({
-    keys: ['uiSettings', 'marketData'],
+    keys: [
+      {
+        uiSettings: ['darkMode', 'showSidebar'],
+      },
+    ],
     rehydrate: true,
     restoreDates: false,
-    storage: sessionStorage,
+    storage: localStorage,
   })(actionReducer);
 }
 

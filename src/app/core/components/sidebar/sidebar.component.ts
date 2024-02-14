@@ -1,9 +1,10 @@
 import { AsyncPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { toggleSidebar } from '../../../state/ui-settings/ui-settings.actions';
 import { selectIsSidebarVisible } from '../../../state/ui-settings/ui-settings.selectors';
 import { ThemeSwitchComponent } from '../theme-switch/theme-switch.component';
 
@@ -17,7 +18,14 @@ import { ThemeSwitchComponent } from '../theme-switch/theme-switch.component';
 export class SidebarComponent {
   visible$: Observable<boolean>;
 
-  constructor(private store: Store) {
+  constructor(
+    private store: Store,
+    private renderer: Renderer2,
+  ) {
     this.visible$ = store.select(selectIsSidebarVisible);
+  }
+
+  toggle() {
+    this.store.dispatch(toggleSidebar());
   }
 }

@@ -4,6 +4,8 @@ import {
   INITIAL_MARKET_DATA_STATE,
   setTicker,
   updateFavourites,
+  updateFromEvent,
+  updateGainersLosers,
   updateTickerSnapshot,
   updateTickerSummary,
 } from './market-data.state';
@@ -15,4 +17,6 @@ export const marketDataReducer = createReducer(
   on(DataActions.getTickerSnapshotsSuccess, updateTickerSnapshot),
   on(DataActions.getTickerSummarySuccess, updateTickerSummary),
   on(DataActions.toggleTickerFavourite, updateFavourites),
+  on(DataActions.receivedEvent, updateFromEvent),
+  on(DataActions.getGainersLosersSuccess, updateGainersLosers),
 );

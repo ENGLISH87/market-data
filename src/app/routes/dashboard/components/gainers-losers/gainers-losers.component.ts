@@ -1,10 +1,13 @@
 import { AsyncPipe, DecimalPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterLink } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { PriceDirective } from '../../../../core/directives/price.directive';
+import { getGainersLosers } from '../../../../state/market-data/market-data.actions';
+import { selectGainers, selectLosers } from '../../../../state/market-data/market-data.selectors';
 
 @Component({
   selector: 'md-gainers-losers',
@@ -21,8 +24,15 @@ import { PriceDirective } from '../../../../core/directives/price.directive';
   styleUrl: './gainers-losers.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GainersLosersComponent {
+export class GainersLosersComponent implements OnInit {
   /* eslint-disable @typescript-eslint/no-explicit-any */
-  gainers$: Observable<any[]> = of([]);
-  losers$: Observable<any[]> = of([]);
+  gainers$: Observable<any[]> = this.store.select(selectGainers);
+  losers$: Observable<any[]> = this.store.select(selectLosers);
+
+  constructor(private store: Store) {}
+
+  ngOnInit() {
+    this.store.dispatch(getGainersLosers({ direction: 'gainers' }));
+    this.store.dispatch(getGainersLosers({ direction: 'losers' }));
+  }
 }

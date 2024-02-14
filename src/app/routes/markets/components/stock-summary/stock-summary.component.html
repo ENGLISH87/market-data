@@ -29,13 +29,10 @@
             @switch (data.snapshot.market_status) {
               @case ('open') {
                 <p class="dark:text-white text-3xl">
-                  {{
-                    (data.snapshot.session?.open || 0) - (data.snapshot.session?.price || 0)
-                      | number: '1.2-2'
-                  }}
-                  <span class="text-base" [mdPrice]="data.snapshot.session?.change">
-                    {{ data.snapshot.session?.change }} ({{
-                      data.snapshot.session?.change_percent
+                  {{ data.snapshot.session?.price | number: '1.2-2' }}
+                  <span class="text-base" [mdPrice]="data.snapshot.session?.change"
+                    >{{ data.snapshot.session?.change | number: '1.2-2' }} ({{
+                      data.snapshot.session?.change_percent | number: '1.2-2'
                     }}%)
                   </span>
                 </p>
@@ -49,17 +46,14 @@
               }
               @case ('early_trading') {
                 <p class="dark:text-white text-3xl">
-                  {{
-                    (data.snapshot.session?.price || 0) -
-                      (data.snapshot.session?.early_trading_change || 0)
-                  }}
-                  <span class="text-base" [mdPrice]="data.snapshot.session?.early_trading_change">
-                    {{ data.snapshot.session?.early_trading_change }} ({{
-                      data.snapshot.session?.early_trading_change_percent
+                  {{ data.latestPrice?.vw || data.snapshot.session?.price | number: '1.2-2' }}
+                  <span class="text-base" [mdPrice]="data.snapshot.session?.early_trading_change"
+                    >{{ data.snapshot.session?.early_trading_change | number: '1.2-2' }} ({{
+                      data.snapshot.session?.early_trading_change_percent | number: '1.2-2'
                     }}%)
                   </span>
                 </p>
-                <p>Early-trading: data</p>
+                <p>Early trading: {{ (data.latestPrice?.e | date: 'h:mma') || '-' }}</p>
               }
               @case ('late_trading') {
                 <p class="dark:text-white text-3xl">
@@ -72,9 +66,16 @@
         </div>
         <div>
           @if (isFavourite$ | async) {
-            <button (click)="favourite(data.summary.ticker!, false)">Remove from watch list</button>
+            <button
+              class="rounded border p-3 dark:text-gray-50 dark:bg-cyan-900"
+              (click)="favourite(data.summary.ticker!, false)"
+            >
+              Remove from watch list
+            </button>
           } @else {
-            <button (click)="favourite(data.summary.ticker!, true)">Add to watch list</button>
+            <button class="rounded border p-3" (click)="favourite(data.summary.ticker!, true)">
+              Add to watch list
+            </button>
           }
         </div>
       </section>

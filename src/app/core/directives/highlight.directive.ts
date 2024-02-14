@@ -7,7 +7,7 @@ import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 export class HighlightDirective {
   private prev: number | undefined;
 
-  @Input() set smdHighlight(value: number | undefined) {
+  @Input() set mdHighlight(value: number | undefined) {
     this.calcHighlight(value);
     this.prev = value;
   }
@@ -19,13 +19,13 @@ export class HighlightDirective {
 
   calcHighlight(value: number | undefined) {
     if (value !== undefined && this.prev !== undefined) {
-      this.renderer.removeClass(this.el.nativeElement, 'price-up');
-      this.renderer.removeClass(this.el.nativeElement, 'price-down');
+      this.renderer.removeClass(this.el.nativeElement, 'highlight-up');
+      this.renderer.removeClass(this.el.nativeElement, 'highlight-down');
 
       value > this.prev
-        ? this.renderer.addClass(this.el.nativeElement, 'price-up')
+        ? this.renderer.addClass(this.el.nativeElement, 'highlight-up')
         : value < this.prev
-          ? this.renderer.addClass(this.el.nativeElement, 'price-down')
+          ? this.renderer.addClass(this.el.nativeElement, 'highlight-down')
           : null; // do nothing
     }
   }

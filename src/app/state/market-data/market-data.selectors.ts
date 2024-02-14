@@ -24,3 +24,6 @@ export const selectFavouriteTickers = createSelector(
       .map((key) => state.tickers[key])
       .filter((value) => value !== undefined) as TickerData[],
 );
+
+export const selectGainers = createSelector(selectMarketDataState, (state) => state.gainers);
+export const selectLosers = createSelector(selectMarketDataState, (state) => state.losers);

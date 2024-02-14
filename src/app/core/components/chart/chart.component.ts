@@ -36,7 +36,7 @@ export class ChartComponent {
         }),
       );
 
-      this.realtime$ = this.marketWsSvc.events(tick).pipe(tap((e) => this.updateCandle(e)));
+      // this.realtime$ = this.marketWsSvc.events(tick).pipe(tap((e) => this.updateCandle(e)));
     }
   }
 
