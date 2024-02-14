@@ -3,7 +3,7 @@
     <ng-template matTabContent>
       @if (gainers$ | async; as gainers) {
         @for (s of gainers$ | async; track $index) {
-          <div class="stock" [routerLink]="['/trade', s.ticker]">
+          <div class="stock" [routerLink]="['/markets', s.ticker]">
             <span>{{ s.ticker }}</span>
             <span>{{ s.todaysChange | number: '1.2-2' }}</span>
             <span [mdPrice]="s.todaysChangePerc">
@@ -23,7 +23,7 @@
     <ng-template matTabContent>
       @if (losers$ | async; as losers) {
         @for (s of losers; track $index) {
-          <div class="stock" [routerLink]="['/trade', s.ticker]">
+          <div class="stock" [routerLink]="['/markets', s.ticker]">
             <span>{{ s.ticker }} </span>
             <span>{{ s.todaysChange | number: '1.2-2' }}</span>
             <span [mdPrice]="s.todaysChangePerc">

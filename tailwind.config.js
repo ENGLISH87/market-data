@@ -3,7 +3,11 @@ module.exports = {
   darkMode: 'class',
   content: ['./src/**/*.{html,ts}'],
   theme: {
-    extend: {},
+    extend: {
+      borderRadius: {
+        DEFAULT: '0.375rem',
+      },
+    },
   },
   plugins: [],
 };

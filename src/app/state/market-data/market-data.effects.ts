@@ -1,22 +1,23 @@
 import { inject } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { map, switchMap, tap } from 'rxjs';
+import { concatMap, map, switchMap, tap } from 'rxjs';
 import { MarketDataRestService } from '../../core/services/data-rest.service';
 import { MarketDataWsService } from '../../core/services/data-ws.service';
+import { selectIsConnected } from '../ui-settings/ui-settings.selectors';
 import * as mdActions from './market-data.actions';
 import { selectMarketDataState } from './market-data.selectors';
 
 export const wsMessage$ = createEffect(
   (
+    store: Store = inject(Store),
     actions$: Actions = inject(Actions),
     marketWsSvc: MarketDataWsService = inject(MarketDataWsService),
   ) => {
     return actions$.pipe(
       ofType(mdActions.subscribeToPriceEvents),
-      tap(({ message }) => {
-        marketWsSvc.message(message);
-      }),
+      concatLatestFrom(() => store.select(selectIsConnected)),
+      tap(([{ message }, connected]) => connected && marketWsSvc.message(message)),
       map(() => mdActions.subscribeToPriceEventsSuccess()),
     );
   },
@@ -77,6 +78,25 @@ export const loadTickerSummary$ = createEffect(
           .tickerDetails(t)
           .pipe(map((summary) => mdActions.getTickerSummarySuccess({ summary }))),
       ),
+    );
+  },
+  {
+    functional: true,
+  },
+);
+
+export const loadGainersLosers$ = createEffect(
+  (
+    actions$: Actions = inject(Actions),
+    marketDataSvc: MarketDataRestService = inject(MarketDataRestService),
+  ) => {
+    return actions$.pipe(
+      ofType(mdActions.getGainersLosers),
+      concatMap(({ direction }) => {
+        return marketDataSvc
+          .snapshotGainersLosers(direction)
+          .pipe(map((data) => mdActions.getGainersLosersSuccess({ data, direction })));
+      }),
     );
   },
   {

@@ -1,11 +1,11 @@
 import { createAction, props } from '@ngrx/store';
-import { UniversalSnapshotInfo } from '@polygon.io/client-js';
-import { ITickerDetailsResults } from '../../core/models/polygon.io.models';
+import { IAggregateStockEvent, UniversalSnapshotInfo } from '@polygon.io/client-js';
+import { ITickerDetailsResults, SnapshotInfo } from '../../core/models/polygon.io.models';
 
 const actionKey = '[MARKET DATA]';
 
-export const subscribeToPriceEventsFactory = (t: string) =>
-  subscribeToPriceEvents({ message: { action: 'subscribe', params: `A.${t}` } });
+export const subscribeToPriceEventsFactory = (t?: string) =>
+  subscribeToPriceEvents({ message: { action: 'subscribe', params: `AM.${t || '*'}` } });
 
 export const subscribeToPriceEvents = createAction(
   `${actionKey} Subscribe To Price Events`,
@@ -41,7 +41,21 @@ export const getTickerSnapshotsSuccess = createAction(
   props<{ snapshots: UniversalSnapshotInfo[] }>(),
 );
 
+export const getGainersLosers = createAction(
+  `${actionKey} Get Gainers Losers`,
+  props<{ direction: 'gainers' | 'losers' }>(),
+);
+export const getGainersLosersSuccess = createAction(
+  `${actionKey} Get Gainers Losers Success`,
+  props<{ data: SnapshotInfo[]; direction: 'gainers' | 'losers' }>(),
+);
+
 export const toggleTickerFavourite = createAction(
   `${actionKey} Toggle Ticker Favourite`,
   props<{ ticker: string; add: boolean }>(),
+);
+
+export const receivedEvent = createAction(
+  `${actionKey} Received Web Socket Event`,
+  props<{ data: IAggregateStockEvent }>(),
 );

@@ -1,4 +1,4 @@
-import { AsyncPipe, DecimalPipe } from '@angular/common';
+import { AsyncPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -13,7 +13,7 @@ import { TickerData } from '../../../../state/market-data/market-data.state';
 @Component({
   selector: 'md-stock-summary',
   standalone: true,
-  imports: [AsyncPipe, PriceDirective, DecimalPipe],
+  imports: [AsyncPipe, DatePipe, PriceDirective, DecimalPipe],
   templateUrl: './stock-summary.component.html',
   styleUrl: './stock-summary.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
