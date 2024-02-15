@@ -121,6 +121,7 @@ interface SnapshotMin {
   o?: number;
   v?: number;
   vw?: number;
+  t?: number;
 }
 interface SnapshotPrevDay {
   c?: number;

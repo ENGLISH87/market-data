@@ -2,17 +2,7 @@
   <mat-tab label="Biggest Gainers">
     <ng-template matTabContent>
       @if (gainers$ | async; as gainers) {
-        @for (s of gainers$ | async; track $index) {
-          <div class="stock" [routerLink]="['/markets', s.ticker]">
-            <span>{{ s.ticker }}</span>
-            <span>{{ s.todaysChange | number: '1.2-2' }}</span>
-            <span [mdPrice]="s.todaysChangePerc">
-              {{ s.todaysChangePerc | number: '1.2-2' }}%
-            </span>
-          </div>
-        } @empty {
-          Currently unavailable
-        }
+        <ng-container *ngTemplateOutlet="table; context: { tickers: gainers }"></ng-container>
       } @else {
         <mat-spinner color="accent" diameter="30"></mat-spinner>
       }
@@ -22,20 +12,57 @@
   <mat-tab label="Biggest Losers">
     <ng-template matTabContent>
       @if (losers$ | async; as losers) {
-        @for (s of losers; track $index) {
-          <div class="stock" [routerLink]="['/markets', s.ticker]">
-            <span>{{ s.ticker }} </span>
-            <span>{{ s.todaysChange | number: '1.2-2' }}</span>
-            <span [mdPrice]="s.todaysChangePerc">
-              {{ s.todaysChangePerc | number: '1.2-2' }}%
-            </span>
-          </div>
-        } @empty {
-          Currently unavailable
-        }
+        <ng-container *ngTemplateOutlet="table; context: { tickers: losers }"></ng-container>
       } @else {
         <mat-spinner color="accent" diameter="30"></mat-spinner>
       }
     </ng-template>
   </mat-tab>
 </mat-tab-group>
+
+<ng-template #table let-tickers="tickers">
+  <table>
+    <thead>
+      <th>Ticker</th>
+      <th>Price</th>
+      <th>Change</th>
+      <th>Change %</th>
+      <th>open</th>
+      <th class="vol">vol</th>
+      <th>prev close</th>
+      <th>prev open</th>
+      <th>prev low</th>
+      <th>prev high</th>
+      <th class="vol">prev vol</th>
+      <th>Updated</th>
+    </thead>
+    <tbody>
+      @for (s of tickers; track $index) {
+        <tr [routerLink]="['/markets', s.ticker]" class="hover:bg-gray-700">
+          <td>{{ s.ticker }}</td>
+          <td>{{ s.day?.vw | number: '1.2-2' }}</td>
+          <td>
+            <span [mdPrice]="s.todaysChange">
+              {{ s.todaysChange | number: '1.2-2' }}
+            </span>
+          </td>
+          <td>
+            <span [mdPrice]="s.todaysChangePerc">
+              {{ s.todaysChangePerc | number: '1.2-2' }}%
+            </span>
+          </td>
+          <td>{{ s.day?.o | number: '1.2-2' }}</td>
+          <td class="vol">{{ s.day?.v | currency }}</td>
+          <td>{{ s.prevDay?.c | number: '1.2-2' }}</td>
+          <td>{{ s.prevDay?.o | number: '1.2-2' }}</td>
+          <td>{{ s.prevDay?.l | number: '1.2-2' }}</td>
+          <td>{{ s.prevDay?.h | number: '1.2-2' }}</td>
+          <td class="vol">{{ s.prevDay?.v | currency }}</td>
+          <td>{{ s.min?.t | date: 'HH:mm' }}</td>
+        </tr>
+      } @empty {
+        Currently unavailable
+      }
+    </tbody>
+  </table>
+</ng-template>

@@ -12,6 +12,7 @@ import { SearchComponent } from '../search/search.component';
   standalone: true,
   imports: [AsyncPipe, NgClass, SearchComponent, MatIconModule],
   templateUrl: './nav.component.html',
+  styleUrl: './nav.component.scss',
 })
 export class NavComponent {
   @Input() title: string | undefined;
