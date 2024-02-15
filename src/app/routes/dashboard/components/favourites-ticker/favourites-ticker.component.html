@@ -13,7 +13,7 @@
             fav.snapshot?.session?.change_percent | number: '1.2-2'
           }}%)
         </p>
-        <p [mdPrice]="fav.snapshot?.session?.change">\/\/\</p>
+        <div #chart></div>
       </div>
     </a>
   } @empty {

@@ -21,7 +21,7 @@
         <div class="flex items-center ms-3">
           <button
             type="button"
-            [ngClass]="{ 'ring-green-600': connected$ | async }"
+            [class.connected]="connected$ | async"
             class="flex text-sm rounded-full ring-2 ring-red-700"
             aria-expanded="false"
           >

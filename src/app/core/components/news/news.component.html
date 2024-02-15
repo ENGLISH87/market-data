@@ -3,7 +3,7 @@
     @for (n of news; track $index) {
       <div class="item py-4">
         <a class="flex" [href]="n.article_url" target="_blank">
-          <img class="mt-1" [src]="n.image_url" [alt]="n.title" />
+          <img class="mt-1 bg-white" [src]="n.image_url" [alt]="n.title" />
           <div>
             <p class="publisher">{{ n.publisher.name }} - {{ n.published_utc | timeago: true }}</p>
             <p class="title dark:text-white">{{ n.title }}</p>

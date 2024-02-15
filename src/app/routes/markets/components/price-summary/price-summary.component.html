@@ -10,7 +10,7 @@
           <div class="flex flex-col w-1/3">
             @switch (data.snapshot.market_status) {
               @case ('open') {
-                <h3 class="text-xl">Live</h3>
+                <h3 class="text-xl">Now</h3>
                 <p class="font-semibold text-2xl dark:text-white py-2">
                   {{ data.snapshot.session?.price | currency }}
                 </p>

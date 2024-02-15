@@ -77,8 +77,6 @@ export class ChartComponent {
   }
 
   private updateCandle(evt: IAggregateStockEvent) {
-    console.log('Update candle: ', evt);
-
     const mstp = this.currentBar?.time ? (this.currentBar.time as number) * 1000 : 0; // convert seconds to milliseconds timestamp
     const oldTime = moment.utc(mstp);
     const newTime = moment.utc(evt.e);
