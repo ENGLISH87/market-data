@@ -2,6 +2,7 @@
   position: relative;
 
   input {
+    @apply bg-white dark:bg-black border border-gray-200 dark:border-gray-700 dark:text-white;
     border-radius: 16px;
     padding: 7px 20px 7px 40px;
     font-size: 14px;
@@ -22,20 +23,15 @@
 }
 
 .search-autocomplete {
-  width: 500px !important;
-  margin-top: 3px;
-  border-radius: 4px;
+  @apply mt-2 rounded-sm dark:bg-black;
 
   mat-option {
+    @apply even:bg-gray-100 dark:text-gray-300 dark:bg-black dark:even:bg-gray-900 dark:hover:bg-gray-800;
     height: 24px;
     min-height: inherit;
 
-    &:nth-child(odd) {
-      background-color: rgb(0 0 0 / 10%);
-    }
-
     > span {
-      text-wrap: nowrap !important;
+      white-space: nowrap !important;
       text-overflow: ellipsis;
       overflow: hidden;
     }

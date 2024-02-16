@@ -1,0 +1,20 @@
+.md-table {
+  @apply table-auto rounded w-full;
+
+  th {
+    @apply pb-2 font-light dark:bg-zinc-900;
+  }
+
+  th,
+  td {
+    @apply text-left border-b dark:border-zinc-700 pr-1 whitespace-nowrap;
+
+    &:last-of-type {
+      text-align: right;
+    }
+  }
+
+  tr {
+    @apply dark:even:bg-zinc-900 dark:hover:bg-gray-700;
+  }
+}

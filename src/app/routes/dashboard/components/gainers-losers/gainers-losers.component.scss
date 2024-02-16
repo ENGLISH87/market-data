@@ -1,26 +1,10 @@
 :host {
   mat-tab-group {
     height: 100%;
+    width: 100%;
   }
 
-  table {
-    @apply rounded table-auto w-full;
-
-    th {
-      @apply pb-2 font-light dark:bg-zinc-900;
-    }
-
-    th,
-    td {
-      @apply text-left border-b dark:border-zinc-700 pr-1;
-
-      &.vol {
-        @apply text-right;
-      }
-    }
-
-    tr {
-      @apply dark:even:bg-zinc-900;
-    }
+  .mat-mdc-tab-body-content {
+    width: 100%;
   }
 }

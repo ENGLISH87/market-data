@@ -6,7 +6,7 @@
     "selector-type-no-unknown": [
       true,
       {
-        "ignoreTypes": ["/^smd-.*$/", "/^mat-.*$/"]
+        "ignoreTypes": ["/^md-.*$/", "/^mat-.*$/"]
       }
     ],
     "selector-pseudo-element-no-unknown": [

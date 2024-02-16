@@ -9,7 +9,9 @@
             <p class="title dark:text-white">{{ n.title }}</p>
             <div class="mt-2">
               @for (tick of n.tickers | slice: 0 : 3; track $index) {
-                <a class="tick dark:border-gray-400" [routerLink]="['/trade', tick]">{{ tick }}</a>
+                <a class="tick dark:border-gray-400" [routerLink]="['/markets', tick]">
+                  {{ tick }}
+                </a>
               }
             </div>
           </div>

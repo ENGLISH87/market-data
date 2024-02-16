@@ -1,21 +1,21 @@
 <md-standard-template title="Dashboard">
-  <div class="mb-4 p-4 rounded overflow-x-auto min-h-24 bg-gray-50 dark:bg-gray-800">
+  <div class="grid-box mb-4 !p-2 overflow-x-auto min-h-24">
     <md-favourites-ticker></md-favourites-ticker>
   </div>
 
   <div class="grid md:grid-cols-6 gap-4 mb-4">
-    <div class="md:col-span-4 rounded bg-gray-50 h-[520px] dark:bg-gray-800">
+    <div class="grid-box !p-0 md:col-span-4 w-full overflow-auto h-[620px]">
       <md-gainers-losers></md-gainers-losers>
     </div>
-    <div class="md:col-span-2 p-4 overflow-y-auto rounded bg-gray-50 h-[520px] dark:bg-gray-800">
+    <div class="grid-box md:col-span-2 h-[620px]">
       <h3 class="font-semibold text-2xl dark:text-white">Latest News</h3>
       <md-news></md-news>
     </div>
   </div>
 
-  <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
+  <!-- <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
     <p class="text-2xl text-gray-400 dark:text-gray-500">
       <mat-icon>add</mat-icon>
     </p>
-  </div>
+  </div> -->
 </md-standard-template>

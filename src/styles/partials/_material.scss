@@ -30,3 +30,7 @@ body.dark {
 mat-tab-body {
   @apply p-4;
 }
+
+.cdk-overlay-pane {
+  @apply max-sm:left-0  max-sm:right-0  max-sm:w-full #{!important};
+}
