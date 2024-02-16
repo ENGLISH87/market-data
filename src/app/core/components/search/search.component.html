@@ -1,6 +1,5 @@
 <div class="search">
   <input
-    class="bg-white dark:bg-black border border-gray-200 dark:border-gray-700 dark:text-white"
     type="text"
     placeholder="search markets..."
     [formControl]="searchCtrl"
@@ -10,6 +9,7 @@
   <mat-autocomplete
     #autoComplete
     panelWidth="500px"
+    panelClass="test123"
     class="search-autocomplete"
     [displayWith]="displayFn"
     (optionSelected)="selectTicker($event)"

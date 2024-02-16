@@ -7,13 +7,21 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { PriceDirective } from '../../../../core/directives/price.directive';
 import { SnapshotInfo } from '../../../../core/models/polygon.io.models';
+import { ShortNumberPipe } from '../../../../core/pipes/short-number.pipe';
 import { getGainersLosers } from '../../../../state/market-data/market-data.actions';
 import { selectGainers, selectLosers } from '../../../../state/market-data/market-data.selectors';
 
 @Component({
   selector: 'md-gainers-losers',
   standalone: true,
-  imports: [CommonModule, RouterLink, MatTabsModule, MatProgressSpinnerModule, PriceDirective],
+  imports: [
+    CommonModule,
+    RouterLink,
+    MatTabsModule,
+    MatProgressSpinnerModule,
+    PriceDirective,
+    ShortNumberPipe,
+  ],
   templateUrl: './gainers-losers.component.html',
   styleUrl: './gainers-losers.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

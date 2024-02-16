@@ -21,43 +21,39 @@
 </mat-tab-group>
 
 <ng-template #table let-tickers="tickers">
-  <table>
+  <table class="md-table">
     <thead>
       <th>Ticker</th>
       <th>Price</th>
       <th>Change</th>
       <th>Change %</th>
       <th>open</th>
-      <th class="vol">vol</th>
+      <th>vol</th>
       <th>prev close</th>
       <th>prev open</th>
       <th>prev low</th>
       <th>prev high</th>
-      <th class="vol">prev vol</th>
+      <th>prev vol</th>
       <th>Updated</th>
     </thead>
     <tbody>
       @for (s of tickers; track $index) {
-        <tr [routerLink]="['/markets', s.ticker]" class="hover:bg-gray-700">
+        <tr [routerLink]="['/markets', s.ticker]">
           <td>{{ s.ticker }}</td>
           <td>{{ s.day?.vw | number: '1.2-2' }}</td>
           <td>
-            <span [mdPrice]="s.todaysChange">
-              {{ s.todaysChange | number: '1.2-2' }}
-            </span>
+            <span [mdPrice]="s.todaysChange">{{ s.todaysChange | number: '1.2-2' }}</span>
           </td>
           <td>
-            <span [mdPrice]="s.todaysChangePerc">
-              {{ s.todaysChangePerc | number: '1.2-2' }}%
-            </span>
+            <span [mdPrice]="s.todaysChangePerc">{{ s.todaysChangePerc | number: '1.2-2' }}% </span>
           </td>
           <td>{{ s.day?.o | number: '1.2-2' }}</td>
-          <td class="vol">{{ s.day?.v | currency }}</td>
+          <td>{{ (s.day?.v | shortNumber) || '-' }}</td>
           <td>{{ s.prevDay?.c | number: '1.2-2' }}</td>
           <td>{{ s.prevDay?.o | number: '1.2-2' }}</td>
           <td>{{ s.prevDay?.l | number: '1.2-2' }}</td>
           <td>{{ s.prevDay?.h | number: '1.2-2' }}</td>
-          <td class="vol">{{ s.prevDay?.v | currency }}</td>
+          <td>{{ s.prevDay?.v | shortNumber }}</td>
           <td>{{ s.min?.t | date: 'HH:mm' }}</td>
         </tr>
       } @empty {
