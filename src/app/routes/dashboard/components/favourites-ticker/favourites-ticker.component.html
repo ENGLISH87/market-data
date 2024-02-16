@@ -7,7 +7,7 @@
           {{ fav.latestPrice?.vw || fav.snapshot?.session?.price | number: '1.2-2' }}
         </p>
       </div>
-      <div>
+      <div class="flex flex-col">
         <p class="whitespace-nowrap mb-2">
           <span [mdPrice]="fav.snapshot?.session?.change"
             >{{ fav.snapshot?.session?.change | number: '1.2-2' }} ({{
@@ -15,7 +15,7 @@
             }}%)</span
           >
         </p>
-        <div #chart></div>
+        <md-mini-chart class="h-full" [snapshot]="fav.snapshot"></md-mini-chart>
       </div>
     </a>
   } @empty {
