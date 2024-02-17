@@ -1,7 +1,7 @@
-import { ColorType } from 'lightweight-charts';
+import { ColorType, DeepPartial, TimeChartOptions } from 'lightweight-charts';
 import moment from 'moment';
 
-export const chartConfig = {
+export const chartConfig: DeepPartial<TimeChartOptions> = {
   layout: {
     textColor: 'white',
     background: { type: ColorType.Solid, color: 'transparent' },
@@ -9,6 +9,22 @@ export const chartConfig = {
   grid: {
     horzLines: { color: '#1b2224' },
     vertLines: { color: '#1b2224' },
+  },
+  autoSize: true,
+  handleScroll: {
+    vertTouchDrag: false,
+    pressedMouseMove: false,
+    mouseWheel: false,
+    horzTouchDrag: false,
+  },
+  handleScale: {
+    mouseWheel: false,
+    pinch: false,
+    axisPressedMouseMove: false,
+  },
+  timeScale: {
+    fixLeftEdge: true,
+    fixRightEdge: true,
   },
   localization: {
     timeFormatter: (ts: number) => {

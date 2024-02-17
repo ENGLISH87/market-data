@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ChartComponent } from '../../../../core/components/chart/chart.component';
 import { NewsComponent } from '../../../../core/components/news/news.component';
+import { ShortNumberPipe } from '../../../../core/pipes/short-number.pipe';
 import { StandardTemplateComponent } from '../../../../core/templates/standard-template/standard-template.component';
 import {
   getTickerSnapshot,
@@ -25,6 +26,7 @@ import { StockSummaryComponent } from '../stock-summary/stock-summary.component'
   imports: [
     CommonModule,
     RouterModule,
+    ShortNumberPipe,
     StandardTemplateComponent,
     MatTabsModule,
     MatIconModule,
