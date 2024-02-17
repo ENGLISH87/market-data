@@ -13,9 +13,9 @@ import {
 } from 'lightweight-charts';
 import moment from 'moment';
 import { BehaviorSubject, combineLatest, Observable, of, switchMap, tap } from 'rxjs';
+import { Timespan } from '../../models/agg.model';
 import { MarketDataRestService } from '../../services/data-rest.service';
 import { MarketDataWsService } from '../../services/data-ws.service';
-import { Timespan } from './../../models/agg.model';
 import { chartConfig } from './chart.config';
 
 @Component({
@@ -30,7 +30,10 @@ export class ChartComponent {
   @Input() set ticker(tick: string | undefined) {
     if (tick) {
       this.aggregates$ = combineLatest([of(tick), this.range$]).pipe(
-        switchMap(([t, r]) => this.marketRestSvc.aggregates(t, 1, r)),
+        switchMap(([t, r]) => {
+          const { multiplier, span, from } = this.calcMultiplierSpan(r);
+          return this.marketRestSvc.aggregates(t, multiplier, span, from);
+        }),
         tap((data) => {
           this.setupChart(data);
         }),
@@ -42,9 +45,10 @@ export class ChartComponent {
 
   @ViewChild('chart', { static: false }) chartContainer!: ElementRef<HTMLDivElement>;
 
-  range$ = new BehaviorSubject<Timespan>(Timespan.hour);
+  range$ = new BehaviorSubject<string>('day');
   aggregates$: Observable<CandlestickData<Time>[]> | undefined;
   realtime$: Observable<IAggregateStockEvent> | undefined;
+
   chart: IChartApi | undefined;
   candlestickSeries: ISeriesApi<'Candlestick', Time, CandlestickData<Time>> | undefined;
   currentBar: CandlestickData<Time> | undefined;
@@ -74,13 +78,14 @@ export class ChartComponent {
     }) as ISeriesApi<'Candlestick', Time, CandlestickData<Time>>;
     this.currentBar = data[data.length - 1];
     this.candlestickSeries.setData(data);
+    this.chart.timeScale().fitContent();
   }
 
   private updateCandle(evt: IAggregateStockEvent) {
     const mstp = this.currentBar?.time ? (this.currentBar.time as number) * 1000 : 0; // convert seconds to milliseconds timestamp
     const oldTime = moment.utc(mstp);
     const newTime = moment.utc(evt.e);
-    const isSame = oldTime.isSame(newTime, this.range$.value);
+    const isSame = oldTime.isSame(newTime, 'minute');
 
     // if evt time within timespan of last bar, then update the bar
     if (isSame && this.currentBar && this.currentBar.open) {
@@ -100,5 +105,46 @@ export class ChartComponent {
     }
 
     this.candlestickSeries?.update(this.currentBar);
+  }
+
+  private calcMultiplierSpan(range: string) {
+    switch (range) {
+      case 'day':
+        return {
+          multiplier: 1,
+          span: Timespan.minute,
+          from: moment().startOf('day').valueOf(),
+        };
+      case 'week':
+        return {
+          multiplier: 1,
+          span: Timespan.hour,
+          from: moment().subtract(1, 'week').valueOf(),
+        };
+      case 'month':
+        return {
+          multiplier: 6,
+          span: Timespan.hour,
+          from: moment().subtract(1, 'month').valueOf(),
+        };
+      case '3months':
+        return {
+          multiplier: 1,
+          span: Timespan.day,
+          from: moment().subtract(3, 'months').valueOf(),
+        };
+      case 'year':
+        return {
+          multiplier: 1,
+          span: Timespan.day,
+          from: moment().subtract(1, 'year').valueOf(),
+        };
+      default:
+        return {
+          multiplier: 1,
+          span: Timespan.minute,
+          from: moment().startOf('day').valueOf(),
+        };
+    }
   }
 }

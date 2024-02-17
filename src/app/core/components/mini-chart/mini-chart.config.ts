@@ -31,4 +31,15 @@ export const miniChartConfig: DeepPartial<TimeChartOptions> = {
       visible: false,
     },
   },
+  handleScale: {
+    mouseWheel: false,
+    pinch: false,
+    axisPressedMouseMove: false,
+  },
+  handleScroll: {
+    horzTouchDrag: false,
+    vertTouchDrag: false,
+    mouseWheel: false,
+    pressedMouseMove: false,
+  },
 };

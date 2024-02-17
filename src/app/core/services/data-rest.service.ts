@@ -104,10 +104,10 @@ export class MarketDataRestService {
     ticker: string,
     multiplier = 1,
     timespan = Timespan.hour,
-    frm?: number,
+    frm: number,
     to?: number,
   ): Observable<CandlestickData[]> {
-    const fromString = (frm || this.getFromDate(timespan)).toString();
+    const fromString = frm.toString();
     const toString = (to || moment().valueOf()).toString();
 
     return from(
@@ -129,22 +129,5 @@ export class MarketDataRestService {
         }),
       ),
     );
-  }
-
-  private getFromDate(ts: Timespan): number {
-    switch (ts) {
-      case Timespan.minute:
-        return moment().subtract(12, 'hours').valueOf();
-      case Timespan.hour:
-        return moment().subtract(720, 'hours').valueOf();
-      case Timespan.day:
-        return moment().subtract(720, 'days').valueOf();
-      case Timespan.week:
-        return moment().subtract(720, 'weeks').valueOf();
-      case Timespan.month:
-        return moment().subtract(100, 'months').valueOf();
-      default:
-        return moment().subtract(720, 'days').valueOf();
-    }
   }
 }

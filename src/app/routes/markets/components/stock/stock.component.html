@@ -65,7 +65,7 @@
           </div>
           <div class="flex justify-between mb-6">
             <span class="uppercase">Market Cap</span>
-            <span class="dark:text-white">{{ data.summary?.market_cap | currency }}</span>
+            <span class="dark:text-white">{{ data.summary?.market_cap || 0 | shortNumber }}</span>
           </div>
           <div class="flex justify-between mb-6">
             <span class="uppercase">SIC Code</span>
