@@ -3,6 +3,7 @@ import * as DataActions from './market-data.actions';
 import {
   INITIAL_MARKET_DATA_STATE,
   setTicker,
+  updateAllSnapshots,
   updateFavourites,
   updateFromEvent,
   updateGainersLosers,
@@ -19,4 +20,5 @@ export const marketDataReducer = createReducer(
   on(DataActions.toggleTickerFavourite, updateFavourites),
   on(DataActions.receivedEvent, updateFromEvent),
   on(DataActions.getGainersLosersSuccess, updateGainersLosers),
+  on(DataActions.getAllSnapshotsSuccess, updateAllSnapshots),
 );

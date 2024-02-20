@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
-import { IWebsocketClient } from '@polygon.io/client-js';
+import { IAggregateStockEvent, IWebsocketClient } from '@polygon.io/client-js';
+import { filter, Observable, Subject } from 'rxjs';
 import { ICloseEvent, IMessageEvent, w3cwebsocket } from 'websocket';
 import { environment } from '../../../environments/environment';
 import { POLYGON_WEBSOCKET_CLIENT } from '../../app.config';
@@ -13,6 +14,7 @@ import { apiConnectSuccess, apiDisconnected } from '../../state/ui-settings/ui-s
 })
 export class MarketDataWsService {
   private _socket$: w3cwebsocket | undefined;
+  private _events$: Subject<IAggregateStockEvent> = new Subject();
 
   constructor(
     @Inject(POLYGON_WEBSOCKET_CLIENT) private socket: IWebsocketClient,
@@ -41,20 +43,21 @@ export class MarketDataWsService {
         // dispatch event if IAggregateStockEvent event
         if (data.sym) {
           this.store.dispatch(receivedEvent({ data }));
+          this._events$.next(data);
         }
       };
 
       ws.onerror = (e: Error) => {
-        console.log(e);
+        console.log('ERROR: ' + e);
         this.snackbar.open('Something went wrong!', 'Close');
       };
 
       ws.onopen = () => {
         this.message({ action: 'auth', params: environment.polygonApiKey });
-        // this.message({ action: 'subscribe', params: 'A.*' });
       };
 
       ws.onclose = (e: ICloseEvent) => {
+        console.log('CONNECTION CLOSED: ' + e);
         this.snackbar.open('Connection closed!', 'Close', { duration: 1500 });
         this.store.dispatch(apiDisconnected({ e }));
       };
@@ -79,5 +82,14 @@ export class MarketDataWsService {
    */
   message(msg: object): void {
     this._socket$?.send(JSON.stringify(msg));
+  }
+
+  /**
+   * Filter websocket events by given ticker
+   * @param ticker stock ticker
+   * @returns Observable<IAggregateStockEvent>
+   */
+  events(ticker?: string): Observable<IAggregateStockEvent> {
+    return this._events$.asObservable().pipe(filter((e) => (ticker ? e.sym === ticker : true)));
   }
 }

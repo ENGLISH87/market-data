@@ -1,5 +1,5 @@
 @if (data$ | async; as data) {
-  @if (data.summary && data.snapshot) {
+  @if (data.summary && data.uniSnapshot) {
     <div class="w-full">
       <div class="day bg-gray-400 dark:bg-black mb-6">
         <button (click)="today = true" [class.active]="today">Today</button>
@@ -8,48 +8,48 @@
       @if (today) {
         <div class="flex flex-row w-full divide-x divide-solid divide-gray-500">
           <div class="flex flex-col w-1/3">
-            @switch (data.snapshot.market_status) {
+            @switch (data.uniSnapshot.market_status) {
               @case ('open') {
                 <h3 class="text-xl">Now</h3>
                 <p class="font-semibold text-2xl dark:text-white py-2">
-                  {{ data.snapshot.session?.price | currency }}
+                  {{ data.uniSnapshot.session?.price | currency }}
                 </p>
-                <p [mdPrice]="data.snapshot.session?.change">
-                  {{ data.snapshot.session?.change | number: '1.2-2' }} ({{
-                    data.snapshot.session?.change_percent | number: '1.2-2'
+                <p [mdPrice]="data.uniSnapshot.session?.change">
+                  {{ data.uniSnapshot.session?.change | number: '1.2-2' }} ({{
+                    data.uniSnapshot.session?.change_percent | number: '1.2-2'
                   }}%)
                 </p>
               }
               @case ('closed') {
                 <h3 class="text-xl">Market Closed</h3>
                 <p class="font-semibold text-2xl dark:text-white py-2">
-                  {{ data.snapshot.session?.close | currency }}
+                  {{ data.uniSnapshot.session?.close | currency }}
                 </p>
-                <p [mdPrice]="data.snapshot.session?.change">
-                  {{ data.snapshot.session?.change | number: '1.2-2' }} ({{
-                    data.snapshot.session?.change_percent | number: '1.2-2'
+                <p [mdPrice]="data.uniSnapshot.session?.change">
+                  {{ data.uniSnapshot.session?.change | number: '1.2-2' }} ({{
+                    data.uniSnapshot.session?.change_percent | number: '1.2-2'
                   }}%)
                 </p>
               }
               @case ('early_trading') {
                 <h3 class="text-xl">Early Trading</h3>
                 <p class="font-semibold text-2xl dark:text-white py-2">
-                  {{ data.snapshot.session?.price | currency }}
+                  {{ data.uniSnapshot.session?.price | currency }}
                 </p>
-                <p [mdPrice]="data.snapshot.session?.early_trading_change">
-                  {{ data.snapshot.session?.early_trading_change | number: '1.2-2' }} ({{
-                    data.snapshot.session?.early_trading_change_percent | number: '1.2-2'
+                <p [mdPrice]="data.uniSnapshot.session?.early_trading_change">
+                  {{ data.uniSnapshot.session?.early_trading_change | number: '1.2-2' }} ({{
+                    data.uniSnapshot.session?.early_trading_change_percent | number: '1.2-2'
                   }}%)
                 </p>
               }
               @case ('late_trading') {
                 <h3 class="text-xl">Late Trading</h3>
                 <p class="font-semibold text-2xl dark:text-white py-2">
-                  {{ data.snapshot.session?.close | currency }}
+                  {{ data.uniSnapshot.session?.close | currency }}
                 </p>
-                <p [mdPrice]="data.snapshot.session?.late_trading_change">
-                  {{ data.snapshot.session?.late_trading_change | number: '1.2-2' }} ({{
-                    data.snapshot.session?.late_trading_change_percent | number: '1.2-2'
+                <p [mdPrice]="data.uniSnapshot.session?.late_trading_change">
+                  {{ data.uniSnapshot.session?.late_trading_change | number: '1.2-2' }} ({{
+                    data.uniSnapshot.session?.late_trading_change_percent | number: '1.2-2'
                   }}%)
                 </p>
               }
@@ -58,14 +58,14 @@
           <div class="flex flex-col w-1/3 pl-4 sm:pl-5">
             <h3 class="text-xl">Previous Close</h3>
             <p class="font-semibold text-2xl dark:text-white py-2">
-              {{ data.snapshot.session?.previous_close | currency }}
+              {{ data.uniSnapshot.session?.previous_close | currency }}
             </p>
             <p>June 16, 16:00</p>
           </div>
           <div class="flex flex-col w-1/3 pl-4 sm:pl-9">
             <h3 class="text-xl">Open</h3>
             <p class="font-semibold text-2xl dark:text-white py-2">
-              {{ data.snapshot.session?.open | currency }}
+              {{ data.uniSnapshot.session?.open | currency }}
             </p>
             <p>June 17, 09:30</p>
           </div>

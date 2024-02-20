@@ -2,6 +2,7 @@ import { IAggregateStockEvent, UniversalSnapshotInfo } from '@polygon.io/client-
 import { CandlestickData } from 'lightweight-charts';
 import { ITickerDetailsResults, SnapshotInfo } from '../../core/models/polygon.io.models';
 import {
+  getAllSnapshotsSuccess,
   getGainersLosersSuccess,
   getTickerSnapshotsSuccess,
   getTickerSummarySuccess,
@@ -12,7 +13,8 @@ import {
 
 export interface TickerData {
   summary?: ITickerDetailsResults;
-  snapshot?: UniversalSnapshotInfo;
+  snapshot?: SnapshotInfo;
+  uniSnapshot?: UniversalSnapshotInfo;
   latestPrice?: IAggregateStockEvent;
   lastWeekAgg?: CandlestickData[];
 }
@@ -68,8 +70,8 @@ export const updateTickerSnapshot = (
       (acc, cur) => {
         acc[cur.ticker!] = {
           ...state.tickers[cur.ticker!],
-          snapshot: cur,
-        };
+          uniSnapshot: cur,
+        } as TickerData;
 
         return acc;
       },
@@ -144,5 +146,28 @@ export const updateGainersLosers = (
   return {
     ...state,
     [direction]: data,
+  };
+};
+
+export const updateAllSnapshots = (
+  state: MarketDataState,
+  { snapshots }: ReturnType<typeof getAllSnapshotsSuccess>,
+): MarketDataState => {
+  return {
+    ...state,
+    tickers: {
+      ...state.tickers,
+      ...snapshots.reduce(
+        (acc, cur) => {
+          acc[cur.ticker!] = {
+            ...state.tickers[cur.ticker!],
+            snapshot: cur,
+          };
+
+          return acc;
+        },
+        {} as Record<string, TickerData>,
+      ),
+    },
   };
 };

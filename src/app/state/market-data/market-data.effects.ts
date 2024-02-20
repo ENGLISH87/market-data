@@ -103,3 +103,26 @@ export const loadGainersLosers$ = createEffect(
     functional: true,
   },
 );
+
+export const loadAllSnapshots = createEffect(
+  (
+    actions$: Actions = inject(Actions),
+    marketDataSvc: MarketDataRestService = inject(MarketDataRestService),
+  ) => {
+    return actions$.pipe(
+      ofType(mdActions.getAllSnapshots),
+      switchMap(() =>
+        marketDataSvc.getAllTickers().pipe(
+          map((snapshots) =>
+            mdActions.getAllSnapshotsSuccess({
+              snapshots,
+            }),
+          ),
+        ),
+      ),
+    );
+  },
+  {
+    functional: true,
+  },
+);

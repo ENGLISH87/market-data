@@ -1,0 +1,85 @@
+<p-table
+  #dt
+  dataKey="ticker"
+  sortField="ticker"
+  [value]="(all$ | async) || []"
+  [paginator]="true"
+  [rows]="20"
+  [rowsPerPageOptions]="[10, 20, 50]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} tickers"
+  [globalFilterFields]="['ticker']"
+>
+  <ng-template pTemplate="caption">
+    <div class="grid sm:grid-cols-3">
+      <div class="flex items-center justify-between sm:col-span-2 mb-2">
+        <h3 class="font-light text-2xl dark:text-white">All Markets</h3>
+        <button label="Clear" class="p-1 dark:text-white" (click)="clear(dt)">
+          <mat-icon>filter_alt_off</mat-icon>
+        </button>
+      </div>
+      <div class="sm:pl-4 sm:col-span-1">
+        <span class="search">
+          <input
+            pInputText
+            type="text"
+            (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+            placeholder="Filter by ticker"
+          />
+          <mat-icon class="dark:text-white">search</mat-icon>
+        </span>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="ticker">Symbol <p-sortIcon field="ticker"></p-sortIcon></th>
+      <th pSortableColumn="day.vw">Price <p-sortIcon field="day.vw"></p-sortIcon></th>
+      <th pSortableColumn="todaysChange">1 Day <p-sortIcon field="todaysChange"></p-sortIcon></th>
+      <th pSortableColumn="todaysChangePerc">
+        1 Day % <p-sortIcon field="todaysChangePerc"></p-sortIcon>
+      </th>
+      <th pSortableColumn="day.open">Open <p-sortIcon field="day.open"></p-sortIcon></th>
+      <th pSortableColumn="day.vol" class="text-right">
+        Vol <p-sortIcon field="day.vol"></p-sortIcon>
+      </th>
+      <th pSortableColumn="prevDay.o">Prev Open <p-sortIcon field="prevDay.o"></p-sortIcon></th>
+      <th pSortableColumn="prevDay.c">Prev Close <p-sortIcon field="prevDay.c"></p-sortIcon></th>
+      <th pSortableColumn="prevDay.l">Prev Low <p-sortIcon field="prevDay.l"></p-sortIcon></th>
+      <th pSortableColumn="prevDay.h">Prev High <p-sortIcon field="prevDay.h"></p-sortIcon></th>
+      <th pSortableColumn="prevDay.v" class="text-right">
+        Prev Vol <p-sortIcon field="prevDay.v"></p-sortIcon>
+      </th>
+      <th pSortableColumn="min.t" class="text-right">
+        Updated <p-sortIcon field="min.t"></p-sortIcon>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-s>
+    <tr [routerLink]="['/markets', s.ticker]">
+      <td>{{ s.ticker }}</td>
+      <td>{{ s.day?.vw | number: '1.2-2' }}</td>
+      <td>
+        <span [mdPrice]="s.todaysChange">{{ s.todaysChange | number: '1.2-2' }}</span>
+      </td>
+      <td>
+        <span [mdPrice]="s.todaysChangePerc">{{ s.todaysChangePerc | number: '1.2-2' }}% </span>
+      </td>
+      <td>{{ s.day?.o | number: '1.2-2' }}</td>
+      <td class="text-right">{{ (s.day?.v | shortNumber) || '-' }}</td>
+      <td>{{ s.prevDay?.o | number: '1.2-2' }}</td>
+      <td>{{ s.prevDay?.c | number: '1.2-2' }}</td>
+      <td>{{ s.prevDay?.l | number: '1.2-2' }}</td>
+      <td>{{ s.prevDay?.h | number: '1.2-2' }}</td>
+      <td class="text-right">{{ s.prevDay?.v | shortNumber }}</td>
+      <td class="text-right">{{ s.min?.t | date: 'HH:mm' }}</td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr class="empty">
+      <td colspan="12">
+        <p class="text-center my-20">Currently no data</p>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

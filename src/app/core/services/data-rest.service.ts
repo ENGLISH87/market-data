@@ -55,6 +55,10 @@ export class MarketDataRestService {
     ).pipe(map((res) => res.results));
   }
 
+  getAllTickers(): Observable<SnapshotInfo[]> {
+    return from(this.rest.stocks.snapshotAllTickers()).pipe(map((res) => res.tickers || []));
+  }
+
   /**
    * Retrieve snapshot data for a given ticker
    * @param ticker
