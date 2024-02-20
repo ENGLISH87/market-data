@@ -4,6 +4,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { TableModule } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { PriceDirective } from '../../../../core/directives/price.directive';
 import { SnapshotInfo } from '../../../../core/models/polygon.io.models';
@@ -19,6 +20,7 @@ import { selectGainers, selectLosers } from '../../../../state/market-data/marke
     RouterLink,
     MatTabsModule,
     MatProgressSpinnerModule,
+    TableModule,
     PriceDirective,
     ShortNumberPipe,
   ],
@@ -27,13 +29,27 @@ import { selectGainers, selectLosers } from '../../../../state/market-data/marke
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GainersLosersComponent implements OnInit {
-  /* eslint-disable @typescript-eslint/no-explicit-any */
   gainers$: Observable<SnapshotInfo[]> = this.store.select(selectGainers);
   losers$: Observable<SnapshotInfo[]> = this.store.select(selectLosers);
+  cols: string[] = [
+    'ticker',
+    'day.vw',
+    'todaysChange',
+    'todaysChangePerc',
+    'day.o',
+    'day.v',
+    'prevDay.c',
+    'prevDay.o',
+    'prevDay.l',
+    'prevDay.h',
+    'prevDay.v',
+    'min.t',
+  ];
 
   constructor(private store: Store) {}
 
   ngOnInit() {
+    /* eslint-disable @ngrx/avoid-dispatching-multiple-actions-sequentially */
     this.store.dispatch(getGainersLosers({ direction: 'gainers' }));
     this.store.dispatch(getGainersLosers({ direction: 'losers' }));
   }

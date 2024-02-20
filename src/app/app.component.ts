@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 import { filter } from 'rxjs';
 import { routeStateTrigger } from './core/animations/animations';
 import { SidebarComponent } from './core/components/sidebar/sidebar.component';
-import { subscribeToPriceEventsFactory } from './state/market-data/market-data.actions';
 import { apiConnect } from './state/ui-settings/ui-settings.actions';
 import { selectIsConnected } from './state/ui-settings/ui-settings.selectors';
 
@@ -28,7 +27,7 @@ export class AppComponent {
         takeUntilDestroyed(),
       )
       .subscribe(() => {
-        this.store.dispatch(subscribeToPriceEventsFactory());
+        // this.store.dispatch(subscribeToPriceEventsFactory());
       });
   }
 }

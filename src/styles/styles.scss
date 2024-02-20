@@ -1,17 +1,21 @@
 /* stylelint-disable font-family-no-missing-generic-family-keyword */
 /* tailwind setup */
+@import './partials/layout';
+@import './partials/search';
+@import './partials/variables';
+@import './partials/material';
+@import './partials/table';
+@import './partials/prices';
+
+@import 'primeng/resources/themes/nova/theme.css';
+@import 'primeng/resources/primeng.min.css';
+
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons+Outlined';
 @import 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,300,0,0';
-
-@import './partials/layout';
-@import './partials/variables';
-@import './partials/material';
-@import './partials/table';
-@import './partials/prices';
 
 html,
 body {

@@ -1,20 +1,70 @@
-.md-table {
-  @apply table-auto rounded w-full;
+.p-datatable {
+  overflow: hidden;
 
-  th {
-    @apply pb-2 font-light dark:bg-zinc-900;
+  .p-datatable-header {
+    @apply bg-transparent dark:bg-gray-800 rounded;
   }
 
-  th,
-  td {
-    @apply text-left border-b dark:border-zinc-700 pr-1 whitespace-nowrap;
+  .p-sortable-column.p-highlight,
+  .p-sortable-column.p-highlight .p-sortable-column-icon {
+    @apply text-gray-700;
 
-    &:last-of-type {
-      text-align: right;
+    &:hover {
+      @apply dark:text-gray-200;
     }
   }
 
-  tr {
-    @apply dark:even:bg-zinc-900 dark:hover:bg-gray-700;
+  .p-sortable-column:not(.p-highlight):hover .p-sortable-column-icon {
+    @apply dark:text-gray-200;
+  }
+
+  .p-datatable-thead > tr > th {
+    @apply whitespace-nowrap bg-transparent dark:bg-gray-700;
+    @apply dark:text-gray-400 border-b dark:border-gray-900;
+    padding: 4px 6px;
+
+    &:first-of-type {
+      padding-left: 1rem;
+    }
+
+    &:last-of-type {
+      padding-right: 1rem;
+    }
+
+    * {
+      display: inline-block;
+    }
+  }
+
+  .p-datatable-tbody > tr {
+    @apply bg-transparent dark:bg-gray-800 dark:even:bg-gray-900;
+    @apply dark:text-gray-200;
+
+    td {
+      padding: 4px 6px;
+
+      &:first-of-type {
+        padding-left: 1rem;
+      }
+
+      &:last-of-type {
+        padding-right: 1rem;
+      }
+    }
+
+    &not:empty:hover {
+      td {
+        @apply dark:bg-gray-700;
+      }
+    }
+  }
+}
+
+.p-paginator {
+  @apply bg-transparent dark:bg-gray-800 rounded p-4;
+  @apply dark:text-gray-200;
+
+  .p-paginator-current {
+    margin-left: auto;
   }
 }

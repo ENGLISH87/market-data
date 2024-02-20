@@ -41,6 +41,12 @@ export const getTickerSnapshotsSuccess = createAction(
   props<{ snapshots: UniversalSnapshotInfo[] }>(),
 );
 
+export const getAllSnapshots = createAction(`${actionKey} Get All Snapshots`);
+export const getAllSnapshotsSuccess = createAction(
+  `${actionKey} Get All Snapshots Success`,
+  props<{ snapshots: UniversalSnapshotInfo[] }>(),
+);
+
 export const getGainersLosers = createAction(
   `${actionKey} Get Gainers Losers`,
   props<{ direction: 'gainers' | 'losers' }>(),

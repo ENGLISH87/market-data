@@ -1,4 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { SnapshotInfo } from '../../core/models/polygon.io.models';
 import { MarketDataState, TickerData } from './market-data.state';
 
 export const selectMarketDataState = createFeatureSelector<MarketDataState>('marketData');
@@ -27,3 +28,15 @@ export const selectFavouriteTickers = createSelector(
 
 export const selectGainers = createSelector(selectMarketDataState, (state) => state.gainers);
 export const selectLosers = createSelector(selectMarketDataState, (state) => state.losers);
+
+export const selectAllSnapshots = createSelector(selectMarketDataState, (state) =>
+  Object.values(state.tickers).reduce(
+    (acc: SnapshotInfo[], cur: TickerData | undefined): SnapshotInfo[] => {
+      if (cur?.snapshot) {
+        acc.push(cur.snapshot);
+      }
+      return acc;
+    },
+    [],
+  ),
+);

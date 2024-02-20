@@ -33,13 +33,17 @@ export class ChartComponent {
         switchMap(([t, r]) => {
           const { multiplier, span, from } = this.calcMultiplierSpan(r);
           return this.marketRestSvc.aggregates(t, multiplier, span, from);
+
+          // setup realtime if range is live
+          this.realtime$ =
+            r === 'live'
+              ? this.marketWsSvc.events(tick).pipe(tap((e) => this.updateCandle(e)))
+              : undefined;
         }),
         tap((data) => {
           this.setupChart(data);
         }),
       );
-
-      // this.realtime$ = this.marketWsSvc.events(tick).pipe(tap((e) => this.updateCandle(e)));
     }
   }
 
@@ -58,6 +62,10 @@ export class ChartComponent {
     private marketRestSvc: MarketDataRestService,
   ) {}
 
+  /**
+   * Chart setup
+   * @param data CandlestickData[]
+   */
   private setupChart(data: CandlestickData[]) {
     // remove any existing chart
     this.chart?.remove();
@@ -69,6 +77,8 @@ export class ChartComponent {
       ...chartConfig,
       height: this.chartContainer.nativeElement.offsetHeight,
     });
+
+    // setup candlestick series
     this.candlestickSeries = this.chart.addCandlestickSeries({
       upColor: '#26a69a',
       downColor: '#ef5350',
@@ -76,11 +86,16 @@ export class ChartComponent {
       wickUpColor: '#26a69a',
       wickDownColor: '#ef5350',
     }) as ISeriesApi<'Candlestick', Time, CandlestickData<Time>>;
+
     this.currentBar = data[data.length - 1];
     this.candlestickSeries.setData(data);
     this.chart.timeScale().fitContent();
   }
 
+  /**
+   * update current candle value for realtime updates
+   * @param evt realtime stock event
+   */
   private updateCandle(evt: IAggregateStockEvent) {
     const mstp = this.currentBar?.time ? (this.currentBar.time as number) * 1000 : 0; // convert seconds to milliseconds timestamp
     const oldTime = moment.utc(mstp);
@@ -107,6 +122,11 @@ export class ChartComponent {
     this.candlestickSeries?.update(this.currentBar);
   }
 
+  /**
+   * Calc aggregates multiplier, span and from date
+   * @param range date range
+   * @returns
+   */
   private calcMultiplierSpan(range: string) {
     switch (range) {
       case 'day':
