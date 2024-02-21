@@ -1,11 +1,15 @@
 import { AsyncPipe, DecimalPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { MiniChartComponent } from '../../../../core/components/mini-chart/mini-chart.component';
 import { HighlightDirective } from '../../../../core/directives/highlight.directive';
 import { PriceDirective } from '../../../../core/directives/price.directive';
+import {
+  subscribeToPriceEvents,
+  unsubscribePriceEvents,
+} from '../../../../state/market-data/market-data.actions';
 import { selectFavouriteTickers } from '../../../../state/market-data/market-data.selectors';
 import { TickerData } from '../../../../state/market-data/market-data.state';
 
@@ -25,10 +29,26 @@ import { TickerData } from '../../../../state/market-data/market-data.state';
   styleUrl: './favourites-ticker.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FavouritesTickerComponent {
+export class FavouritesTickerComponent implements OnDestroy {
   favourites$: Observable<TickerData[]>;
+  subscribed: string[] | undefined;
 
   constructor(private store: Store) {
-    this.favourites$ = store.select(selectFavouriteTickers);
+    this.favourites$ = store.select(selectFavouriteTickers).pipe(
+      tap((favs) => {
+        // on first load, subscribe to price change messages
+        if (!this.subscribed && favs.length > 0) {
+          this.subscribed = favs.reduce((acc: string[], cur) => {
+            cur.uniSnapshot?.ticker && acc.push(cur.uniSnapshot?.ticker);
+            return acc;
+          }, []);
+          this.store.dispatch(subscribeToPriceEvents(this.subscribed));
+        }
+      }),
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.store.dispatch(unsubscribePriceEvents(this.subscribed || []));
   }
 }

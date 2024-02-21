@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { concatMap, map, switchMap, tap } from 'rxjs';
+import { concatMap, map, skipWhile, switchMap, take, tap } from 'rxjs';
 import { MarketDataRestService } from '../../core/services/data-rest.service';
 import { MarketDataWsService } from '../../core/services/data-ws.service';
 import { selectIsConnected } from '../ui-settings/ui-settings.selectors';
@@ -16,9 +16,31 @@ export const wsMessage$ = createEffect(
   ) => {
     return actions$.pipe(
       ofType(mdActions.subscribeToPriceEvents),
-      concatLatestFrom(() => store.select(selectIsConnected)),
-      tap(([{ message }, connected]) => connected && marketWsSvc.message(message)),
+      switchMap((action) =>
+        store.select(selectIsConnected).pipe(
+          skipWhile((connected) => !connected),
+          take(1),
+          map(() => action),
+        ),
+      ),
+      tap(({ message }) => marketWsSvc.message(message)),
       map(() => mdActions.subscribeToPriceEventsSuccess()),
+    );
+  },
+  {
+    functional: true,
+  },
+);
+
+export const wsUnsubscribe$ = createEffect(
+  (
+    actions$: Actions = inject(Actions),
+    marketWsSvc: MarketDataWsService = inject(MarketDataWsService),
+  ) => {
+    return actions$.pipe(
+      ofType(mdActions.unsubscribePriceEvents),
+      map(({ message }) => marketWsSvc.message(message)),
+      map(() => mdActions.unsubscribePriceEventsSuccess()),
     );
   },
   {

@@ -6,7 +6,7 @@ import { filter, Observable, Subject } from 'rxjs';
 import { ICloseEvent, IMessageEvent, w3cwebsocket } from 'websocket';
 import { environment } from '../../../environments/environment';
 import { POLYGON_WEBSOCKET_CLIENT } from '../../app.config';
-import { receivedEvent } from '../../state/market-data/market-data.actions';
+import { receivedPriceMessage } from '../../state/market-data/market-data.actions';
 import { apiConnectSuccess, apiDisconnected } from '../../state/ui-settings/ui-settings.actions';
 
 @Injectable({
@@ -42,7 +42,7 @@ export class MarketDataWsService {
 
         // dispatch event if IAggregateStockEvent event
         if (data.sym) {
-          this.store.dispatch(receivedEvent({ data }));
+          this.store.dispatch(receivedPriceMessage({ data }));
           this._events$.next(data);
         }
       };

@@ -6,7 +6,7 @@ import {
   getGainersLosersSuccess,
   getTickerSnapshotsSuccess,
   getTickerSummarySuccess,
-  receivedEvent,
+  receivedPriceMessage,
   setCurrentTicker,
   toggleTickerFavourite,
 } from './market-data.actions';
@@ -25,6 +25,7 @@ export interface MarketDataState {
   losers: SnapshotInfo[];
   favourites: string[];
   currentTicker: string | undefined;
+  subscribed: string[];
 }
 
 export const INITIAL_MARKET_DATA_STATE: MarketDataState = {
@@ -49,6 +50,7 @@ export const INITIAL_MARKET_DATA_STATE: MarketDataState = {
     'PG',
     'MAT',
   ],
+  subscribed: [],
 };
 
 export const setTicker = (
@@ -119,9 +121,9 @@ export const updateFavourites = (
  * @param { data: IAggregateStockEvent }
  * @returns MarketDataState
  */
-export const updateFromEvent = (
+export const updateFromMessage = (
   state: MarketDataState,
-  { data }: ReturnType<typeof receivedEvent>,
+  { data }: ReturnType<typeof receivedPriceMessage>,
 ): MarketDataState => {
   const match = state.tickers[data.sym];
   const newState = Object.assign({}, state);

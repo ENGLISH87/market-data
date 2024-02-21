@@ -5,7 +5,7 @@ import {
   setTicker,
   updateAllSnapshots,
   updateFavourites,
-  updateFromEvent,
+  updateFromMessage,
   updateGainersLosers,
   updateTickerSnapshot,
   updateTickerSummary,
@@ -18,7 +18,7 @@ export const marketDataReducer = createReducer(
   on(DataActions.getTickerSnapshotsSuccess, updateTickerSnapshot),
   on(DataActions.getTickerSummarySuccess, updateTickerSummary),
   on(DataActions.toggleTickerFavourite, updateFavourites),
-  on(DataActions.receivedEvent, updateFromEvent),
+  on(DataActions.receivedPriceMessage, updateFromMessage),
   on(DataActions.getGainersLosersSuccess, updateGainersLosers),
   on(DataActions.getAllSnapshotsSuccess, updateAllSnapshots),
 );

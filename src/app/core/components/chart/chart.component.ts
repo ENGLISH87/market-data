@@ -32,13 +32,12 @@ export class ChartComponent {
       this.aggregates$ = combineLatest([of(tick), this.range$]).pipe(
         switchMap(([t, r]) => {
           const { multiplier, span, from } = this.calcMultiplierSpan(r);
-          return this.marketRestSvc.aggregates(t, multiplier, span, from);
-
           // setup realtime if range is live
           this.realtime$ =
             r === 'live'
               ? this.marketWsSvc.events(tick).pipe(tap((e) => this.updateCandle(e)))
               : undefined;
+          return this.marketRestSvc.aggregates(t, multiplier, span, from);
         }),
         tap((data) => {
           this.setupChart(data);

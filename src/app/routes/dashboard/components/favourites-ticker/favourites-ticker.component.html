@@ -1,8 +1,8 @@
 <div class="flex gap-2">
-  @for (fav of favourites$ | async; track $index) {
+  @for (fav of favourites$ | async; track fav.snapshot?.ticker) {
     <a [routerLink]="['/markets', fav.uniSnapshot?.ticker]">
       <div class="pr-2">
-        <p class="font-semibold dark:text-white mb-2">{{ fav.uniSnapshot?.ticker }}</p>
+        <p class="pl-2 font-semibold dark:text-white mb-2">{{ fav.uniSnapshot?.ticker }}</p>
         <p [mdHighlight]="fav.latestPrice?.vw || fav.uniSnapshot?.session?.price">
           {{ fav.latestPrice?.vw || fav.uniSnapshot?.session?.price | number: '1.2-2' }}
         </p>
