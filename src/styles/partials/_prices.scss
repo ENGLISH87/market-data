@@ -20,12 +20,20 @@
   white-space: nowrap;
 }
 
-.highlight-up {
-  background-color: rgb(2, 172, 44);
-  color: white;
-}
+.highlight {
+  background-color: transparent;
+  transition: all 1000ms linear;
+  @apply rounded text-gray-900 dark:text-white px-2;
 
-.highlight-down {
-  background-color: rgb(221, 40, 76);
-  color: white;
+  &.up {
+    background-color: rgb(2, 172, 44);
+    transition: background-color 0ms;
+    @apply rounded text-white px-2;
+  }
+
+  &.down {
+    background-color: rgb(221, 40, 76);
+    transition: background-color 0ms;
+    @apply rounded text-white px-2;
+  }
 }

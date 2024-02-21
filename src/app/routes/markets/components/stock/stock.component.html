@@ -56,7 +56,7 @@
           <div class="flex justify-between mb-6">
             <span class="uppercase">Volume</span>
             <span class="dark:text-white">
-              {{ data.uniSnapshot?.session?.volume | number }}
+              {{ data.uniSnapshot?.session?.volume || 0 | shortNumber }}
             </span>
           </div>
           <div class="flex justify-between mb-6">

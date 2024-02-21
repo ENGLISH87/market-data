@@ -7,13 +7,13 @@
   [rows]="20"
   [rowsPerPageOptions]="[10, 20, 50]"
   [showCurrentPageReport]="true"
-  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} tickers"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} symbols"
   [globalFilterFields]="['ticker']"
 >
   <ng-template pTemplate="caption">
     <div class="grid sm:grid-cols-3">
       <div class="flex items-center justify-between sm:col-span-2 mb-2">
-        <h3 class="font-light text-2xl dark:text-white">All Markets</h3>
+        <h3 class="font-light text-2xl dark:text-white">All Symbols</h3>
         <button label="Clear" class="p-1 dark:text-white" (click)="clear(dt)">
           <mat-icon>filter_alt_off</mat-icon>
         </button>
@@ -24,7 +24,7 @@
             pInputText
             type="text"
             (input)="dt.filterGlobal($any($event.target).value, 'contains')"
-            placeholder="Filter by ticker"
+            placeholder="Filter by symbol"
           />
           <mat-icon class="dark:text-white">search</mat-icon>
         </span>
@@ -34,12 +34,14 @@
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="ticker">Symbol <p-sortIcon field="ticker"></p-sortIcon></th>
-      <th pSortableColumn="day.vw">Price <p-sortIcon field="day.vw"></p-sortIcon></th>
-      <th pSortableColumn="todaysChange">1 Day <p-sortIcon field="todaysChange"></p-sortIcon></th>
+      <th>Price <p-sortIcon field="day.vw"></p-sortIcon></th>
+      <th pSortableColumn="todaysChange">1D <p-sortIcon field="todaysChange"></p-sortIcon></th>
       <th pSortableColumn="todaysChangePerc">
-        1 Day % <p-sortIcon field="todaysChangePerc"></p-sortIcon>
+        1D % <p-sortIcon field="todaysChangePerc"></p-sortIcon>
       </th>
       <th pSortableColumn="day.open">Open <p-sortIcon field="day.open"></p-sortIcon></th>
+      <th pSortableColumn="day.high">High <p-sortIcon field="day.high"></p-sortIcon></th>
+
       <th pSortableColumn="day.vol" class="text-right">
         Vol <p-sortIcon field="day.vol"></p-sortIcon>
       </th>
@@ -66,6 +68,7 @@
         <span [mdPrice]="s.todaysChangePerc">{{ s.todaysChangePerc | number: '1.2-2' }}% </span>
       </td>
       <td>{{ s.day?.o | number: '1.2-2' }}</td>
+      <td>{{ s.day?.h | number: '1.2-2' }}</td>
       <td class="text-right">{{ (s.day?.v | shortNumber) || '-' }}</td>
       <td>{{ s.prevDay?.o | number: '1.2-2' }}</td>
       <td>{{ s.prevDay?.c | number: '1.2-2' }}</td>

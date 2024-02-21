@@ -20,7 +20,7 @@
 
   .p-datatable-thead > tr > th {
     @apply whitespace-nowrap bg-transparent dark:bg-gray-700;
-    @apply dark:text-gray-400 border-b dark:border-gray-900;
+    @apply dark:text-gray-400 border-b dark:border-gray-900 font-light;
     padding: 4px 6px;
 
     &:first-of-type {

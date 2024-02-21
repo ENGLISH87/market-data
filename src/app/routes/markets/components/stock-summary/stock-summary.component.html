@@ -57,9 +57,14 @@
               }
               @case ('late_trading') {
                 <p class="dark:text-white text-3xl">
-                  43.53 <span class="text-base" [mdPrice]="-0.46">-0.46 (-1.05%)</span>
+                  {{ data.latestPrice?.vw || data.uniSnapshot.session?.price | number: '1.2-2' }}
+                  <span class="text-base" [mdPrice]="data.uniSnapshot.session?.late_trading_change">
+                    {{ data.uniSnapshot.session?.late_trading_change | number: '1.2-2' }} ({{
+                      data.uniSnapshot.session?.late_trading_change_percent | number: '1.2-2'
+                    }}%)
+                  </span>
                 </p>
-                <p>Late-trading: data</p>
+                <p>Late-trading: {{ (data.latestPrice?.e | date: 'h:mma') || '-' }}</p>
               }
             }
           </div>

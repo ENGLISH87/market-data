@@ -6,8 +6,10 @@ import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 })
 export class HighlightDirective {
   private prev: number | undefined;
+  private timeoutId: number | undefined;
 
   @Input() set mdHighlight(value: number | undefined) {
+    this.renderer.addClass(this.el.nativeElement, 'highlight');
     this.calcHighlight(value);
     this.prev = value;
   }
@@ -19,14 +21,19 @@ export class HighlightDirective {
 
   calcHighlight(value: number | undefined) {
     if (value !== undefined && this.prev !== undefined) {
-      this.renderer.removeClass(this.el.nativeElement, 'highlight-up');
-      this.renderer.removeClass(this.el.nativeElement, 'highlight-down');
+      const cls: string = value > this.prev ? 'up' : value < this.prev ? 'down' : ''; // do nothing
 
-      value > this.prev
-        ? this.renderer.addClass(this.el.nativeElement, 'highlight-up')
-        : value < this.prev
-          ? this.renderer.addClass(this.el.nativeElement, 'highlight-down')
-          : null; // do nothing
+      if (cls) {
+        window.clearTimeout(this.timeoutId);
+        this.renderer.removeClass(this.el.nativeElement, 'up');
+        this.renderer.removeClass(this.el.nativeElement, 'down');
+
+        this.renderer.addClass(this.el.nativeElement, cls);
+
+        this.timeoutId = window.setTimeout(() => {
+          this.renderer.removeClass(this.el.nativeElement, cls);
+        }, 700);
+      }
     }
   }
 }

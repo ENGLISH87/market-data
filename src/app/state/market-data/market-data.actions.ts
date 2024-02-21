@@ -4,15 +4,24 @@ import { ITickerDetailsResults, SnapshotInfo } from '../../core/models/polygon.i
 
 const actionKey = '[MARKET DATA]';
 
-export const subscribeToPriceEventsFactory = (t?: string) =>
-  subscribeToPriceEvents({ message: { action: 'subscribe', params: `AM.${t || '*'}` } });
-
 export const subscribeToPriceEvents = createAction(
   `${actionKey} Subscribe To Price Events`,
-  props<{ message: object }>(),
+  (ticks: string[]) => ({
+    message: { action: 'subscribe', params: ticks.map((s) => `A.${s}`).join(',') },
+  }),
 );
 export const subscribeToPriceEventsSuccess = createAction(
   `${actionKey} Subscribe To Price Event Success`,
+);
+
+export const unsubscribePriceEvents = createAction(
+  `${actionKey} Unsubscribe From Price Events`,
+  (ticks: string[]) => ({
+    message: { action: 'unsubscribe', params: ticks.map((s) => `A.${s}`).join(',') },
+  }),
+);
+export const unsubscribePriceEventsSuccess = createAction(
+  `${actionKey} Unsubscribe From Price Events Success`,
 );
 
 export const setCurrentTicker = createAction(
@@ -31,6 +40,7 @@ export const getTickerSummarySuccess = createAction(
 );
 
 export const getStockFavourites = createAction(`${actionKey} Get Stock Favourites`);
+
 export const getTickerSnapshot = createAction(
   `${actionKey} Get Ticker Snapshot`,
   props<{ t: string }>(),
@@ -61,7 +71,7 @@ export const toggleTickerFavourite = createAction(
   props<{ ticker: string; add: boolean }>(),
 );
 
-export const receivedEvent = createAction(
-  `${actionKey} Received Web Socket Event`,
+export const receivedPriceMessage = createAction(
+  `${actionKey} Received WS Price Message`,
   props<{ data: IAggregateStockEvent }>(),
 );
