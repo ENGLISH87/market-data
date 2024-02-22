@@ -48,7 +48,7 @@ export class ChartComponent {
 
   @ViewChild('chart', { static: false }) chartContainer!: ElementRef<HTMLDivElement>;
 
-  range$ = new BehaviorSubject<string>('day');
+  range$ = new BehaviorSubject<string>('live');
   aggregates$: Observable<CandlestickData<Time>[]> | undefined;
   realtime$: Observable<IAggregateStockEvent> | undefined;
 

@@ -4,6 +4,7 @@ import { ITickerDetailsResults, SnapshotInfo } from '../../core/models/polygon.i
 import {
   getAllSnapshotsSuccess,
   getGainersLosersSuccess,
+  getStockFavouritesSuccess,
   getTickerSnapshotsSuccess,
   getTickerSummarySuccess,
   receivedPriceMessage,
@@ -61,6 +62,27 @@ export const setTicker = (
   currentTicker: t,
 });
 
+export const updateTickerFavourites = (
+  state: MarketDataState,
+  { snapshots }: ReturnType<typeof getStockFavouritesSuccess>,
+) => ({
+  ...state,
+  tickers: {
+    ...state.tickers,
+    ...snapshots.reduce(
+      (acc, cur) => {
+        acc[cur.ticker!] = {
+          ...state.tickers[cur.ticker!],
+          snapshot: cur,
+        };
+
+        return acc;
+      },
+      {} as Record<string, TickerData>,
+    ),
+  },
+});
+
 export const updateTickerSnapshot = (
   state: MarketDataState,
   { snapshots }: ReturnType<typeof getTickerSnapshotsSuccess>,
@@ -73,7 +95,7 @@ export const updateTickerSnapshot = (
         acc[cur.ticker!] = {
           ...state.tickers[cur.ticker!],
           uniSnapshot: cur,
-        } as TickerData;
+        };
 
         return acc;
       },

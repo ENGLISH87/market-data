@@ -12,7 +12,7 @@
       @apply font-semibold;
 
       &.active {
-        @apply dark:bg-cyan-200 dark:text-black;
+        @apply bg-white dark:bg-cyan-200 dark:text-black;
       }
     }
   }

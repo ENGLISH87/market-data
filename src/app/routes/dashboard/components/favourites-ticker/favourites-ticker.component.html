@@ -1,21 +1,21 @@
 <div class="flex gap-2">
   @for (fav of favourites$ | async; track fav.snapshot?.ticker) {
-    <a [routerLink]="['/markets', fav.uniSnapshot?.ticker]">
+    <a [routerLink]="['/markets', fav.snapshot?.ticker]">
       <div class="pr-2">
-        <p class="pl-2 font-semibold dark:text-white mb-2">{{ fav.uniSnapshot?.ticker }}</p>
-        <p [mdHighlight]="fav.latestPrice?.vw || fav.uniSnapshot?.session?.price">
-          {{ fav.latestPrice?.vw || fav.uniSnapshot?.session?.price | number: '1.2-2' }}
+        <p class="pl-2 font-semibold dark:text-white mb-2">{{ fav.snapshot?.ticker }}</p>
+        <p [mdHighlight]="fav.latestPrice?.vw || fav.snapshot?.min?.vw">
+          {{ fav.latestPrice?.vw || fav.snapshot?.min?.vw | number: '1.2-2' }}
         </p>
       </div>
       <div class="flex flex-col">
         <p class="whitespace-nowrap mb-2">
-          <span [mdPrice]="fav.uniSnapshot?.session?.change"
-            >{{ fav.uniSnapshot?.session?.change | number: '1.2-2' }} ({{
-              fav.uniSnapshot?.session?.change_percent | number: '1.2-2'
+          <span [mdPrice]="fav.snapshot?.todaysChange"
+            >{{ fav.snapshot?.todaysChange | number: '1.2-2' }} ({{
+              fav.snapshot?.todaysChangePerc | number: '1.2-2'
             }}%)</span
           >
         </p>
-        <md-mini-chart class="h-full" [snapshot]="fav.uniSnapshot"></md-mini-chart>
+        <md-mini-chart class="h-full" [snapshot]="fav.snapshot"></md-mini-chart>
       </div>
     </a>
   } @empty {

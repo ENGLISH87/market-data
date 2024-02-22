@@ -34,21 +34,23 @@ export class FavouritesTickerComponent implements OnDestroy {
   subscribed: string[] | undefined;
 
   constructor(private store: Store) {
-    this.favourites$ = store.select(selectFavouriteTickers).pipe(
-      tap((favs) => {
-        // on first load, subscribe to price change messages
-        if (!this.subscribed && favs.length > 0) {
-          this.subscribed = favs.reduce((acc: string[], cur) => {
-            cur.uniSnapshot?.ticker && acc.push(cur.uniSnapshot?.ticker);
-            return acc;
-          }, []);
-          this.store.dispatch(subscribeToPriceEvents(this.subscribed));
-        }
-      }),
-    );
+    this.favourites$ = store
+      .select(selectFavouriteTickers)
+      .pipe(tap((favs) => this.subscribeToEvents(favs)));
   }
 
   ngOnDestroy(): void {
     this.store.dispatch(unsubscribePriceEvents(this.subscribed || []));
+  }
+
+  private subscribeToEvents(favs: TickerData[]) {
+    // on first load, subscribe to price change messages
+    if (!this.subscribed && favs.length > 0) {
+      this.subscribed = favs.reduce((acc: string[], cur) => {
+        cur.uniSnapshot?.ticker && acc.push(cur.uniSnapshot?.ticker);
+        return acc;
+      }, []);
+      this.store.dispatch(subscribeToPriceEvents(this.subscribed));
+    }
   }
 }

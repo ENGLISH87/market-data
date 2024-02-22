@@ -18,24 +18,36 @@
       }
     </ng-template>
   </mat-tab>
+
+  <mat-tab label="Favourites">
+    <ng-template matTabContent>
+      @if (favourites$ | async; as favourites) {
+        <ng-container *ngTemplateOutlet="table; context: { tickers: favourites }"></ng-container>
+      } @else {
+        <mat-spinner color="accent" diameter="30"></mat-spinner>
+      }
+    </ng-template>
+  </mat-tab>
 </mat-tab-group>
 
 <ng-template #table let-tickers="tickers">
   <p-table [value]="tickers" [rows]="50" [rowsPerPageOptions]="[5, 10, 20]">
     <ng-template pTemplate="header">
       <tr>
-        <th>Symbol</th>
+        <th pSortableColumn="ticker">Symbol <p-sortIcon field="ticker"></p-sortIcon></th>
         <th>Price</th>
-        <th>Chg</th>
-        <th>Chg %</th>
-        <th>Open</th>
-        <th>Vol</th>
-        <th>Prev Close</th>
-        <th>Prev Open</th>
-        <th>Prev Low</th>
-        <th>Prev High</th>
-        <th>Prev Vol</th>
-        <th>Updated</th>
+        <th pSortableColumn="todaysChange">Chg <p-sortIcon field="todaysChange"></p-sortIcon></th>
+        <th pSortableColumn="todaysChangePerc">
+          Chg % <p-sortIcon field="todaysChangePerc"></p-sortIcon>
+        </th>
+        <th pSortableColumn="day.open">Open <p-sortIcon field="day.open"></p-sortIcon></th>
+        <th pSortableColumn="day.v">Vol <p-sortIcon field="day.v"></p-sortIcon></th>
+        <th pSortableColumn="prevDay.c">Prev Close <p-sortIcon field="prevDay.c"></p-sortIcon></th>
+        <th pSortableColumn="prevDay.o">Prev Open <p-sortIcon field="prevDay.o"></p-sortIcon></th>
+        <th pSortableColumn="prevDay.l">Prev Low <p-sortIcon field="prevDay.l"></p-sortIcon></th>
+        <th pSortableColumn="prevDay.h">Prev High <p-sortIcon field="prevDay.h"></p-sortIcon></th>
+        <th pSortableColumn="prevDay.v">Prev Vol <p-sortIcon field="prevDay.v"></p-sortIcon></th>
+        <th pSortableColumn="min.t">Updated <p-sortIcon field="min.t"></p-sortIcon></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-s>
@@ -55,7 +67,7 @@
         <td>{{ s.prevDay?.l | number: '1.2-2' }}</td>
         <td>{{ s.prevDay?.h | number: '1.2-2' }}</td>
         <td>{{ s.prevDay?.v | shortNumber }}</td>
-        <td>{{ s.min?.t | date: 'HH:mm' }}</td>
+        <td>{{ s.min.t | date: 'HH:mm' }}</td>
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
