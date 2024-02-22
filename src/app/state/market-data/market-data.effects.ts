@@ -48,7 +48,7 @@ export const wsUnsubscribe$ = createEffect(
   },
 );
 
-export const fetchTickers$ = createEffect(
+export const fetchFavourites$ = createEffect(
   (
     store: Store = inject(Store),
     actions$: Actions = inject(Actions),
@@ -59,8 +59,8 @@ export const fetchTickers$ = createEffect(
       concatLatestFrom(() => store.select(selectMarketDataState)),
       switchMap(([, state]) =>
         marketDataSvc
-          .universalSnapshot(state.favourites)
-          .pipe(map((snapshots) => mdActions.getTickerSnapshotsSuccess({ snapshots }))),
+          .snapshot(state.favourites)
+          .pipe(map((snapshots) => mdActions.getStockFavouritesSuccess({ snapshots }))),
       ),
     );
   },
@@ -78,8 +78,8 @@ export const loadSnapshot$ = createEffect(
       ofType(mdActions.getTickerSnapshot),
       switchMap(({ t }) =>
         marketDataSvc
-          .snapshot(t)
-          .pipe(map((snapshot) => mdActions.getTickerSnapshotsSuccess({ snapshots: [snapshot] }))),
+          .universalSnapshot([t])
+          .pipe(map((snapshots) => mdActions.getTickerSnapshotsSuccess({ snapshots }))),
       ),
     );
   },
@@ -134,7 +134,7 @@ export const loadAllSnapshots = createEffect(
     return actions$.pipe(
       ofType(mdActions.getAllSnapshots),
       switchMap(() =>
-        marketDataSvc.getAllTickers().pipe(
+        marketDataSvc.snapshot([]).pipe(
           map((snapshots) =>
             mdActions.getAllSnapshotsSuccess({
               snapshots,

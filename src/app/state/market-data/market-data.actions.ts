@@ -4,6 +4,12 @@ import { ITickerDetailsResults, SnapshotInfo } from '../../core/models/polygon.i
 
 const actionKey = '[MARKET DATA]';
 
+export const setCurrentTicker = createAction(
+  `${actionKey} Set Current Ticker`,
+  props<{ t: string }>(),
+);
+
+/** PRICE EVENTS */
 export const subscribeToPriceEvents = createAction(
   `${actionKey} Subscribe To Price Events`,
   (ticks: string[]) => ({
@@ -13,7 +19,6 @@ export const subscribeToPriceEvents = createAction(
 export const subscribeToPriceEventsSuccess = createAction(
   `${actionKey} Subscribe To Price Event Success`,
 );
-
 export const unsubscribePriceEvents = createAction(
   `${actionKey} Unsubscribe From Price Events`,
   (ticks: string[]) => ({
@@ -23,12 +28,12 @@ export const unsubscribePriceEvents = createAction(
 export const unsubscribePriceEventsSuccess = createAction(
   `${actionKey} Unsubscribe From Price Events Success`,
 );
-
-export const setCurrentTicker = createAction(
-  `${actionKey} Set Current Ticker`,
-  props<{ t: string }>(),
+export const receivedPriceMessage = createAction(
+  `${actionKey} Received WS Price Message`,
+  props<{ data: IAggregateStockEvent }>(),
 );
 
+/** GET SUMMARY */
 export const getTickerSummary = createAction(
   `${actionKey} Get Ticker Summary`,
   props<{ t: string }>(),
@@ -39,8 +44,14 @@ export const getTickerSummarySuccess = createAction(
   props<{ summary: ITickerDetailsResults }>(),
 );
 
+/** GET FAVOURITES */
 export const getStockFavourites = createAction(`${actionKey} Get Stock Favourites`);
+export const getStockFavouritesSuccess = createAction(
+  `${actionKey} Get Stock Favourites Success`,
+  props<{ snapshots: SnapshotInfo[] }>(),
+);
 
+/** GET SNAPSHOT  */
 export const getTickerSnapshot = createAction(
   `${actionKey} Get Ticker Snapshot`,
   props<{ t: string }>(),
@@ -51,12 +62,14 @@ export const getTickerSnapshotsSuccess = createAction(
   props<{ snapshots: UniversalSnapshotInfo[] }>(),
 );
 
+/** GET ALL SNAPSHOTS */
 export const getAllSnapshots = createAction(`${actionKey} Get All Snapshots`);
 export const getAllSnapshotsSuccess = createAction(
   `${actionKey} Get All Snapshots Success`,
-  props<{ snapshots: UniversalSnapshotInfo[] }>(),
+  props<{ snapshots: SnapshotInfo[] }>(),
 );
 
+/** GAINERS LOSERS SNAPSHOTS */
 export const getGainersLosers = createAction(
   `${actionKey} Get Gainers Losers`,
   props<{ direction: 'gainers' | 'losers' }>(),
@@ -66,12 +79,8 @@ export const getGainersLosersSuccess = createAction(
   props<{ data: SnapshotInfo[]; direction: 'gainers' | 'losers' }>(),
 );
 
+/** TOGGLE FAVOURITE  */
 export const toggleTickerFavourite = createAction(
   `${actionKey} Toggle Ticker Favourite`,
   props<{ ticker: string; add: boolean }>(),
-);
-
-export const receivedPriceMessage = createAction(
-  `${actionKey} Received WS Price Message`,
-  props<{ data: IAggregateStockEvent }>(),
 );

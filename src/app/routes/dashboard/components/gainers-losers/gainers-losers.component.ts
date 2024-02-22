@@ -10,7 +10,11 @@ import { PriceDirective } from '../../../../core/directives/price.directive';
 import { SnapshotInfo } from '../../../../core/models/polygon.io.models';
 import { ShortNumberPipe } from '../../../../core/pipes/short-number.pipe';
 import { getGainersLosers } from '../../../../state/market-data/market-data.actions';
-import { selectGainers, selectLosers } from '../../../../state/market-data/market-data.selectors';
+import {
+  selectFavouriteSnapshots,
+  selectGainers,
+  selectLosers,
+} from '../../../../state/market-data/market-data.selectors';
 
 @Component({
   selector: 'md-gainers-losers',
@@ -31,6 +35,8 @@ import { selectGainers, selectLosers } from '../../../../state/market-data/marke
 export class GainersLosersComponent implements OnInit {
   gainers$: Observable<SnapshotInfo[]> = this.store.select(selectGainers);
   losers$: Observable<SnapshotInfo[]> = this.store.select(selectLosers);
+  favourites$: Observable<SnapshotInfo[]> = this.store.select(selectFavouriteSnapshots);
+
   cols: string[] = [
     'ticker',
     'day.vw',

@@ -55,21 +55,17 @@ export class MarketDataRestService {
     ).pipe(map((res) => res.results));
   }
 
-  getAllTickers(): Observable<SnapshotInfo[]> {
-    return from(this.rest.stocks.snapshotAllTickers()).pipe(map((res) => res.tickers || []));
-  }
-
   /**
    * Retrieve snapshot data for a given ticker
    * @param ticker
    * @returns Observable<UniversalSnapshotInfo>
    */
-  snapshot(ticker: string): Observable<UniversalSnapshotInfo> {
+  snapshot(tickers: string[]): Observable<SnapshotInfo[]> {
     return from(
-      this.rest.stocks.universalSnapshot({
-        'ticker.any_of': ticker,
+      this.rest.stocks.snapshotAllTickers({
+        tickers: tickers.join(','),
       }),
-    ).pipe(map((res) => res.results![0]));
+    ).pipe(map((res) => (res.tickers as SnapshotInfo[]) || []));
   }
 
   /**
@@ -92,7 +88,7 @@ export class MarketDataRestService {
    */
   snapshotGainersLosers(direction: 'gainers' | 'losers'): Observable<SnapshotInfo[]> {
     return from(this.rest.stocks.snapshotGainersLosers(direction)).pipe(
-      map((res) => res.tickers || []),
+      map((res): SnapshotInfo[] => (res.tickers as SnapshotInfo[]) || []),
     );
   }
 

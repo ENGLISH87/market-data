@@ -7,7 +7,7 @@
 
   .p-sortable-column.p-highlight,
   .p-sortable-column.p-highlight .p-sortable-column-icon {
-    @apply text-gray-700;
+    @apply text-gray-700 dark:text-gray-200;
 
     &:hover {
       @apply dark:text-gray-200;

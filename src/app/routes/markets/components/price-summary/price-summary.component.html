@@ -3,7 +3,9 @@
     <div class="w-full">
       <div class="day bg-gray-400 dark:bg-black mb-6">
         <button (click)="today = true" [class.active]="today">Today</button>
-        <button (click)="today = false" [class.active]="!today">Yesterday</button>
+        <button *ngIf="data.snapshot" (click)="today = false" [class.active]="!today">
+          Yesterday
+        </button>
       </div>
       @if (today) {
         <div class="flex flex-row w-full divide-x divide-solid divide-gray-500">
@@ -60,32 +62,45 @@
             <p class="font-semibold text-2xl dark:text-white py-2">
               {{ data.uniSnapshot.session?.previous_close | currency }}
             </p>
-            <p>June 16, 16:00</p>
+            <!-- <p>June 16, 16:00</p> -->
           </div>
           <div class="flex flex-col w-1/3 pl-4 sm:pl-9">
             <h3 class="text-xl">Open</h3>
             <p class="font-semibold text-2xl dark:text-white py-2">
               {{ data.uniSnapshot.session?.open | currency }}
             </p>
-            <p>June 17, 09:30</p>
+            <!-- <p>June 17, 09:30</p> -->
           </div>
         </div>
       } @else {
         <div class="flex flex-row w-full divide-x divide-solid divide-gray-500">
-          <div class="flex flex-col w-1/3">
-            <h3 class="text-xl">Pre-market</h3>
-            <p class="font-semibold text-2xl dark:text-white py-2">$210.45</p>
-            <p [mdPrice]="-0.46">-0.46 (-1.05%)</p>
-          </div>
-          <div class="flex flex-col w-1/3 pl-4 sm:pl-5">
+          <div class="flex flex-col w-1/3 sm:pl-5">
             <h3 class="text-xl">Open</h3>
-            <p class="font-semibold text-2xl dark:text-white py-2">$137.54</p>
-            <p>June 16, 16:00</p>
+            <p class="font-semibold text-2xl dark:text-white py-2">
+              {{ data.snapshot?.prevDay?.o | currency }}
+            </p>
+            <p>{{ getYestMs(data.snapshot?.updated) | date: 'MMM d yyyy' }}</p>
           </div>
+
           <div class="flex flex-col w-1/3 pl-4 sm:pl-5">
             <h3 class="text-xl">Close</h3>
-            <p class="font-semibold text-2xl dark:text-white py-2">$135.87</p>
-            <p>June 17, 09:30</p>
+            <p class="font-semibold text-2xl dark:text-white py-2">
+              {{ data.snapshot?.prevDay?.c | currency }}
+            </p>
+            <p [mdPrice]="(data.snapshot?.prevDay?.c || 0) - (data.snapshot?.prevDay?.o || 0)">
+              {{
+                (data.snapshot?.prevDay?.c || 0) - (data.snapshot?.prevDay?.o || 0)
+                  | number: '1.2-2'
+              }}
+              ({{ getPercentChange(data.snapshot?.prevDay?.o, data.snapshot?.prevDay?.c) }}%)
+            </p>
+          </div>
+
+          <div class="flex flex-col w-1/3 pl-4">
+            <h3 class="text-xl">Vol.</h3>
+            <p class="font-semibold text-2xl dark:text-white py-2">
+              {{ data.snapshot?.prevDay?.v | number: '1.0-0' }}
+            </p>
           </div>
         </div>
       }

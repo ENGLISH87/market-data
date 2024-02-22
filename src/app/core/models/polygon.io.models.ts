@@ -78,15 +78,13 @@ export interface ITickerDetailsResults {
 }
 
 export interface SnapshotInfo {
-  day?: SnapshotDay;
-  lastQuote?: SnapshotLastQuote;
-  lastTrade?: SnapshotLastTrade;
-  min?: SnapshotMin;
-  prevDay?: SnapshotPrevDay;
-  ticker?: string;
-  todaysChange?: number;
-  todaysChangePerc?: number;
-  updated?: number;
+  day: SnapshotDay;
+  min: SnapshotMin;
+  prevDay: SnapshotPrevDay;
+  ticker: string;
+  todaysChange: number;
+  todaysChangePerc: number;
+  updated: number;
 }
 
 interface SnapshotDay {
@@ -98,21 +96,6 @@ interface SnapshotDay {
   vw?: number;
 }
 
-interface SnapshotLastQuote {
-  P?: number;
-  S?: number;
-  p?: number;
-  s?: number;
-  t?: number;
-}
-interface SnapshotLastTrade {
-  c?: string[];
-  i?: string;
-  p?: number;
-  s?: number;
-  t?: number;
-  x?: number;
-}
 interface SnapshotMin {
   av?: number;
   c?: number;
@@ -123,6 +106,7 @@ interface SnapshotMin {
   vw?: number;
   t?: number;
 }
+
 interface SnapshotPrevDay {
   c?: number;
   h?: number;
