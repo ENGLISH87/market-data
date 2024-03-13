@@ -81,7 +81,7 @@ jobs:
     needs:
       - build
       - lint
-      # - test
+      - test
       - e2e-test
     steps:
       - uses: actions/checkout@v4
