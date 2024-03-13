@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { StockSummaryComponent } from './stock-summary.component';
 
 describe('StockSummaryComponent', () => {
@@ -8,6 +9,7 @@ describe('StockSummaryComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [StockSummaryComponent],
+      providers: [provideMockStore()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(StockSummaryComponent);
@@ -17,5 +19,13 @@ describe('StockSummaryComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should display stock summary data on load', () => {
+    // TODO:
+  });
+
+  it('should dispatch action toggleTickerFavourite on watch list btn click', () => {
+    // TODO:
   });
 });

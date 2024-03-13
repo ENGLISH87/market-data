@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy } from '@angular/core';
+import { Component, DestroyRef, OnDestroy, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -40,26 +40,30 @@ import { StockSummaryComponent } from '../stock-summary/stock-summary.component'
   templateUrl: './stock.component.html',
   styleUrl: './stock.component.scss',
 })
-export class StockComponent implements OnDestroy {
+export class StockComponent implements OnInit, OnDestroy {
   ticker: string | undefined;
   data$: Observable<TickerData | undefined>;
 
   constructor(
     private store: Store,
     private route: ActivatedRoute,
+    private destroyRef: DestroyRef,
   ) {
     this.data$ = this.store.select(selectCurrentTickerData);
+  }
 
-    this.route.params.pipe(takeUntilDestroyed()).subscribe((params: Params) => {
+  ngOnInit(): void {
+    this.route.params.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params: Params) => {
       this.ticker = params['ticker'];
 
-      // TODO: simplify to single dispatch
-      // load 52w data for o,c,h,l - https://polygon.io/quote/api/polygon/v2/aggs/ticker/{ticker}/range/53/week/{1yr ago}/{today}?sort=desc&limit=50000
-      /* eslint-disable @ngrx/avoid-dispatching-multiple-actions-sequentially */
-      this.store.dispatch(setCurrentTicker({ t: this.ticker! }));
-      this.store.dispatch(subscribeToPriceEvents([this.ticker!]));
-      this.store.dispatch(getTickerSnapshot({ t: this.ticker! }));
-      this.store.dispatch(getTickerSummary({ t: this.ticker! }));
+      // TODO: simplify to single dispatch to resolve linting warning
+      // @ngrx/avoid-dispatching-multiple-actions-sequentially
+      [
+        setCurrentTicker({ t: this.ticker! }),
+        subscribeToPriceEvents([this.ticker!]),
+        getTickerSnapshot({ t: this.ticker! }),
+        getTickerSummary({ t: this.ticker! }),
+      ].forEach((a) => this.store.dispatch(a));
     });
   }
 

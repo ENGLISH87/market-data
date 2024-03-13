@@ -60,7 +60,7 @@ export class MarketDataRestService {
    * @param ticker
    * @returns Observable<UniversalSnapshotInfo>
    */
-  snapshot(tickers: string[]): Observable<SnapshotInfo[]> {
+  snapshot(tickers: string[] = []): Observable<SnapshotInfo[]> {
     return from(
       this.rest.stocks.snapshotAllTickers({
         tickers: tickers.join(','),

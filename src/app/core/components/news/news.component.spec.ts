@@ -9,7 +9,9 @@ xdescribe('NewsComponent', () => {
     await TestBed.configureTestingModule({
       imports: [NewsComponent],
     }).compileComponents();
+  });
 
+  beforeEach(() => {
     fixture = TestBed.createComponent(NewsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -17,5 +19,13 @@ xdescribe('NewsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should fetch latest news on component load', () => {
+    // TODO:
+  });
+
+  it('should get latest news for input provided ticker', () => {
+    // TODO:
   });
 });

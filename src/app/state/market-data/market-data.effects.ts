@@ -126,7 +126,7 @@ export const loadGainersLosers$ = createEffect(
   },
 );
 
-export const loadAllSnapshots = createEffect(
+export const loadAllSnapshots$ = createEffect(
   (
     actions$: Actions = inject(Actions),
     marketDataSvc: MarketDataRestService = inject(MarketDataRestService),
@@ -134,7 +134,7 @@ export const loadAllSnapshots = createEffect(
     return actions$.pipe(
       ofType(mdActions.getAllSnapshots),
       switchMap(() =>
-        marketDataSvc.snapshot([]).pipe(
+        marketDataSvc.snapshot().pipe(
           map((snapshots) =>
             mdActions.getAllSnapshotsSuccess({
               snapshots,

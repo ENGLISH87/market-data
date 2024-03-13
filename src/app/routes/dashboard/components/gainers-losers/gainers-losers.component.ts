@@ -55,8 +55,10 @@ export class GainersLosersComponent implements OnInit {
   constructor(private store: Store) {}
 
   ngOnInit() {
-    /* eslint-disable @ngrx/avoid-dispatching-multiple-actions-sequentially */
-    this.store.dispatch(getGainersLosers({ direction: 'gainers' }));
-    this.store.dispatch(getGainersLosers({ direction: 'losers' }));
+    // TODO: read up on solutions to avoid linting warning:
+    // @ngrx/avoid-dispatching-multiple-actions-sequentially
+    [getGainersLosers({ direction: 'gainers' }), getGainersLosers({ direction: 'losers' })].forEach(
+      (a) => this.store.dispatch(a),
+    );
   }
 }

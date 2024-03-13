@@ -18,4 +18,16 @@ xdescribe('ChartComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should setup chart on component load', () => {
+    // TODO:
+  });
+
+  it('should update chart candle if live chart and new websocket price event received', () => {
+    // TODO:
+  });
+
+  it('should update chart range on ui button click', () => {
+    // TODO:
+  });
 });
