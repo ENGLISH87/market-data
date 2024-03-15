@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideMockStore } from '@ngrx/store/testing';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import {
   FavouritesTickerMockComponent,
   GainersLosersMockComponent,
@@ -8,6 +8,7 @@ import {
 } from '../../../test/component.mocks';
 import { NewsComponent } from '../../core/components/news/news.component';
 import { StandardTemplateComponent } from '../../core/templates/standard-template/standard-template.component';
+import { getStockFavourites } from '../../state/market-data/market-data.actions';
 import { FavouritesTickerComponent } from './components/favourites-ticker/favourites-ticker.component';
 import { GainersLosersComponent } from './components/gainers-losers/gainers-losers.component';
 import { DashboardComponent } from './dashboard.component';
@@ -15,6 +16,7 @@ import { DashboardComponent } from './dashboard.component';
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
+  let store: MockStore;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -43,6 +45,10 @@ describe('DashboardComponent', () => {
 
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
+
+    store = TestBed.inject(MockStore);
+    spyOn(store, 'dispatch');
+
     fixture.detectChanges();
   });
 
@@ -51,6 +57,6 @@ describe('DashboardComponent', () => {
   });
 
   it('should dispatch getStockFavourites action on component load', () => {
-    // TODO:
+    expect(store.dispatch).toHaveBeenCalledWith(getStockFavourites());
   });
 });

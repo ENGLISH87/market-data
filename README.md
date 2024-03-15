@@ -11,6 +11,7 @@ This is by no means a finished product and has plenty of room for improvement:
 - Overlay notification to inform user if websocket connection has disconnected or failed
 - Polygon.io subscription only allows a single websocket connection at any given time, websocket will disconnect if app opened in another window
 - Some areas contain empty components and or static placeholder data
+- Increased unit test coverage - already added lots of unit tests to experiment with TestBed and standalone components
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.1.
 

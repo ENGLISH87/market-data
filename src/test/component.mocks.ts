@@ -1,7 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
-@Component({ selector: 'md-standard-template', standalone: true, template: '' })
-export class StandardTemplateMockComponent {}
+@Component({
+  selector: 'md-standard-template',
+  standalone: true,
+  template: '<ng-content></ng-content>',
+})
+export class StandardTemplateMockComponent {
+  @Input() title: string | undefined;
+}
 
 @Component({ selector: 'md-favourites-ticker', standalone: true, template: '' })
 export class FavouritesTickerMockComponent {}
@@ -25,4 +31,17 @@ export class ThemeSwitchMockComponent {}
 export class GainersLosersMockComponent {}
 
 @Component({ selector: 'md-news', standalone: true, template: '' })
-export class NewsMockComponent {}
+export class NewsMockComponent {
+  @Input() ticker: string | undefined;
+}
+
+@Component({ selector: 'md-chart', standalone: true, template: '' })
+export class ChartMockComponent {
+  @Input() ticker: string | undefined;
+}
+
+@Component({ selector: 'md-stock-summary', standalone: true, template: '' })
+export class StockSummaryMockComponent {}
+
+@Component({ selector: 'md-price-summary', standalone: true, template: '' })
+export class PriceSummaryMockComponent {}
