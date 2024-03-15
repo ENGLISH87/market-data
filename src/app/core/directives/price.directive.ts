@@ -18,7 +18,7 @@ export class PriceDirective {
     this.renderer.removeClass(this.el.nativeElement, 'price-up');
     this.renderer.removeClass(this.el.nativeElement, 'price-down');
 
-    if (price) {
+    if (price !== undefined) {
       price > 0
         ? this.renderer.addClass(this.el.nativeElement, 'price-up')
         : price < 0

@@ -1,5 +1,4 @@
-import { ScrollingModule } from '@angular/cdk/scrolling';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, SlicePipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
@@ -7,19 +6,11 @@ import { TimeagoModule } from 'ngx-timeago';
 import { Observable } from 'rxjs';
 import { ITickerNewsResults } from '../../models/polygon.io.models';
 import { MarketDataRestService } from '../../services/data-rest.service';
-import { SearchComponent } from '../search/search.component';
 
 @Component({
   selector: 'md-news',
   standalone: true,
-  imports: [
-    RouterModule,
-    CommonModule,
-    SearchComponent,
-    ScrollingModule,
-    TimeagoModule,
-    MatProgressSpinnerModule,
-  ],
+  imports: [RouterModule, AsyncPipe, SlicePipe, TimeagoModule, MatProgressSpinnerModule],
   templateUrl: './news.component.html',
   styleUrl: './news.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,6 +22,7 @@ export class NewsComponent implements OnInit {
 
   news$: Observable<ITickerNewsResults[] | undefined> | undefined;
 
+  // TODO: switch to ngrx approach for retrieving data
   constructor(private marketRestSvc: MarketDataRestService) {}
 
   ngOnInit() {

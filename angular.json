@@ -99,6 +99,7 @@
             ],
             "scripts": [],
             "watch": false,
+            "codeCoverage": true,
             "browsers": "ChromeHeadless"
           }
         },

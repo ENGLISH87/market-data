@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import { Component, Renderer2 } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -18,10 +18,7 @@ import { ThemeSwitchComponent } from '../theme-switch/theme-switch.component';
 export class SidebarComponent {
   visible$: Observable<boolean>;
 
-  constructor(
-    private store: Store,
-    private renderer: Renderer2,
-  ) {
+  constructor(private store: Store) {
     this.visible$ = store.select(selectIsSidebarVisible);
   }
 

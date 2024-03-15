@@ -1,5 +1,18 @@
 # MarketData
 
+Angular-based web app playground for interacting with market data and charting, using web sockets and REST api provided by Polygon.io
+
+The app also includes the use of many new Angular experimental features still in developer preview such as Standalone Components and Built-in Control Flow
+
+This is by no means a finished product and has plenty of room for improvement:
+
+- Error handling required for all effects/api calls and displayed using some form of error snackbar
+- HttpInterceptor for dealing with failed reqs / repeat attempts etc
+- Overlay notification to inform user if websocket connection has disconnected or failed
+- Polygon.io subscription only allows a single websocket connection at any given time, websocket will disconnect if app opened in another window
+- Some areas contain empty components and or static placeholder data
+- Increased unit test coverage - already added lots of unit tests to experiment with TestBed and standalone components
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.1.
 
 ## Development server

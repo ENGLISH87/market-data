@@ -23,11 +23,11 @@ export class PriceSummaryComponent {
     this.data$ = this.store.select(selectCurrentTickerData);
   }
 
-  getYestMs(ns: number = 0) {
+  getYestMs(ns: number = 0): number {
     return ns / 1000000 - 86400000;
   }
 
-  getPercentChange(o: number = 0, c: number = 0) {
+  getPercentChange(o: number = 0, c: number = 0): string {
     return (((c - o) / Math.abs(o)) * 100).toFixed(2);
   }
 }

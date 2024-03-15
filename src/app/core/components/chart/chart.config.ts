@@ -28,7 +28,6 @@ export const chartConfig: DeepPartial<TimeChartOptions> = {
   },
   localization: {
     timeFormatter: (ts: number) => {
-      // TODO: only show time when viewing minute/hour intervals
       return moment(ts * 1000).format("DD MMM 'YY HH:mm");
     },
   },
