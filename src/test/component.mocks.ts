@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ColumnConfig } from '../app/core/models/tables.models';
 
 @Component({
   selector: 'md-standard-template',
@@ -45,3 +46,9 @@ export class StockSummaryMockComponent {}
 
 @Component({ selector: 'md-price-summary', standalone: true, template: '' })
 export class PriceSummaryMockComponent {}
+
+@Component({ selector: 'md-data-table', standalone: true, template: '' })
+export class DataTableMockComponent {
+  @Input() data!: unknown;
+  @Input() cols!: ColumnConfig[];
+}

@@ -1,0 +1,46 @@
+<p-table [value]="data" [rows]="50" [rowsPerPageOptions]="[5, 10, 20]">
+  <ng-template pTemplate="header">
+    <tr>
+      @for (c of cols; track $index) {
+        <th [pSortableColumn]="c.field">
+          {{ c.label }} <p-sortIcon [field]="c.field"></p-sortIcon>
+        </th>
+      }
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-row>
+    <tr [routerLink]="['/markets', row.ticker]">
+      @for (c of cols; track $index) {
+        <td>
+          @switch (c.type) {
+            @case (COL_TYPE.Text) {
+              {{ row | nestedProperty: c.field }}
+            }
+            @case (COL_TYPE.ShortNumber) {
+              {{ (row | nestedProperty: c.field | shortNumber) || '-' }}
+            }
+            @case (COL_TYPE.Price) {
+              {{ row | nestedProperty: c.field | number: '1.2-2' }}
+            }
+            @case (COL_TYPE.PriceChange) {
+              <span [mdPrice]="row | nestedProperty: c.field">{{
+                row | nestedProperty: c.field | number: '1.2-2'
+              }}</span>
+            }
+            @case (COL_TYPE.Date) {
+              {{ row | nestedProperty: c.field | date: 'HH:mm' }}
+            }
+          }
+        </td>
+      }
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="emptymessage">
+    <tr class="empty">
+      <td colspan="12">
+        <p class="text-center my-20">Currently no data</p>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
