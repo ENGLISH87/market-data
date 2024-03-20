@@ -2,7 +2,7 @@
   <ng-template pTemplate="header">
     <tr>
       @for (c of cols; track $index) {
-        <th [pSortableColumn]="c.field">
+        <th [pSortableColumn]="c.sortable ? c.field : undefined">
           {{ c.label }} <p-sortIcon [field]="c.field"></p-sortIcon>
         </th>
       }
