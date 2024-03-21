@@ -1,81 +1,11 @@
 <mat-tab-group>
-  <mat-tab label="Biggest Gainers">
-    <ng-template matTabContent>
-      @if (gainers$ | async; as gainers) {
-        <ng-container *ngTemplateOutlet="table; context: { tickers: gainers }"></ng-container>
+  @for (tab of tabs; track $index) {
+    <mat-tab [label]="tab[0]">
+      @if (tab[1] | async; as data) {
+        <md-data-table [data]="data" [cols]="cols" [rowLinkFn]="rowLinkFn"></md-data-table>
       } @else {
         <mat-spinner color="accent" diameter="30"></mat-spinner>
       }
-    </ng-template>
-  </mat-tab>
-
-  <mat-tab label="Biggest Losers">
-    <ng-template matTabContent>
-      @if (losers$ | async; as losers) {
-        <ng-container *ngTemplateOutlet="table; context: { tickers: losers }"></ng-container>
-      } @else {
-        <mat-spinner color="accent" diameter="30"></mat-spinner>
-      }
-    </ng-template>
-  </mat-tab>
-
-  <mat-tab label="Favourites">
-    <ng-template matTabContent>
-      @if (favourites$ | async; as favourites) {
-        <ng-container *ngTemplateOutlet="table; context: { tickers: favourites }"></ng-container>
-      } @else {
-        <mat-spinner color="accent" diameter="30"></mat-spinner>
-      }
-    </ng-template>
-  </mat-tab>
+    </mat-tab>
+  }
 </mat-tab-group>
-
-<ng-template #table let-tickers="tickers">
-  <p-table [value]="tickers" [rows]="50" [rowsPerPageOptions]="[5, 10, 20]">
-    <ng-template pTemplate="header">
-      <tr>
-        <th pSortableColumn="ticker">Symbol <p-sortIcon field="ticker"></p-sortIcon></th>
-        <th>Price</th>
-        <th pSortableColumn="todaysChange">Chg <p-sortIcon field="todaysChange"></p-sortIcon></th>
-        <th pSortableColumn="todaysChangePerc">
-          Chg % <p-sortIcon field="todaysChangePerc"></p-sortIcon>
-        </th>
-        <th pSortableColumn="day.open">Open <p-sortIcon field="day.open"></p-sortIcon></th>
-        <th pSortableColumn="day.v">Vol <p-sortIcon field="day.v"></p-sortIcon></th>
-        <th pSortableColumn="prevDay.c">Prev Close <p-sortIcon field="prevDay.c"></p-sortIcon></th>
-        <th pSortableColumn="prevDay.o">Prev Open <p-sortIcon field="prevDay.o"></p-sortIcon></th>
-        <th pSortableColumn="prevDay.l">Prev Low <p-sortIcon field="prevDay.l"></p-sortIcon></th>
-        <th pSortableColumn="prevDay.h">Prev High <p-sortIcon field="prevDay.h"></p-sortIcon></th>
-        <th pSortableColumn="prevDay.v">Prev Vol <p-sortIcon field="prevDay.v"></p-sortIcon></th>
-        <th pSortableColumn="min.t">Updated <p-sortIcon field="min.t"></p-sortIcon></th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-s>
-      <tr [routerLink]="['/markets', s.ticker]">
-        <td>{{ s.ticker }}</td>
-        <td>{{ s.day?.vw | number: '1.2-2' }}</td>
-        <td>
-          <span [mdPrice]="s.todaysChange">{{ s.todaysChange | number: '1.2-2' }}</span>
-        </td>
-        <td>
-          <span [mdPrice]="s.todaysChangePerc">{{ s.todaysChangePerc | number: '1.2-2' }}% </span>
-        </td>
-        <td>{{ s.day?.o | number: '1.2-2' }}</td>
-        <td>{{ (s.day?.v | shortNumber) || '-' }}</td>
-        <td>{{ s.prevDay?.c | number: '1.2-2' }}</td>
-        <td>{{ s.prevDay?.o | number: '1.2-2' }}</td>
-        <td>{{ s.prevDay?.l | number: '1.2-2' }}</td>
-        <td>{{ s.prevDay?.h | number: '1.2-2' }}</td>
-        <td>{{ s.prevDay?.v | shortNumber }}</td>
-        <td>{{ s.min.t | date: 'HH:mm' }}</td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage">
-      <tr class="empty">
-        <td colspan="12">
-          <p class="text-center my-20">Currently no data</p>
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-</ng-template>

@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { provideMockStore } from '@ngrx/store/testing';
+import { DataTableMockComponent } from '../../../../../test/component.mocks';
+import { DataTableComponent } from '../../../../core/components/data-table/data-table.component';
 import { GainersLosersComponent } from './gainers-losers.component';
 
 describe('GainersLosersComponent', () => {
@@ -11,7 +13,12 @@ describe('GainersLosersComponent', () => {
     await TestBed.configureTestingModule({
       imports: [GainersLosersComponent, NoopAnimationsModule],
       providers: [provideMockStore()],
-    }).compileComponents();
+    })
+      .overrideComponent(GainersLosersComponent, {
+        remove: { imports: [DataTableComponent] },
+        add: { imports: [DataTableMockComponent] },
+      })
+      .compileComponents();
 
     fixture = TestBed.createComponent(GainersLosersComponent);
     component = fixture.componentInstance;

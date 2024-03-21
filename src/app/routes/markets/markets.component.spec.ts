@@ -2,14 +2,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import {
-  AllMockComponent,
+  DataTableMockComponent,
   FavouritesTickerMockComponent,
   StandardTemplateMockComponent,
 } from '../../../test/component.mocks';
+import { DataTableComponent } from '../../core/components/data-table/data-table.component';
 import { StandardTemplateComponent } from '../../core/templates/standard-template/standard-template.component';
 import { getStockFavourites } from '../../state/market-data/market-data.actions';
 import { FavouritesTickerComponent } from '../dashboard/components/favourites-ticker/favourites-ticker.component';
-import { AllComponent } from './components/all/all.component';
 import { MarketsComponent } from './markets.component';
 
 describe('MarketsComponent', () => {
@@ -24,10 +24,14 @@ describe('MarketsComponent', () => {
     })
       .overrideComponent(MarketsComponent, {
         remove: {
-          imports: [StandardTemplateComponent, FavouritesTickerComponent, AllComponent],
+          imports: [StandardTemplateComponent, FavouritesTickerComponent, DataTableComponent],
         },
         add: {
-          imports: [StandardTemplateMockComponent, FavouritesTickerMockComponent, AllMockComponent],
+          imports: [
+            StandardTemplateMockComponent,
+            FavouritesTickerMockComponent,
+            DataTableMockComponent,
+          ],
         },
       })
       .compileComponents();
