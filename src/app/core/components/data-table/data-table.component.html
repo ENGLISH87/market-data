@@ -1,15 +1,52 @@
-<p-table [value]="data" [rows]="50" [rowsPerPageOptions]="[5, 10, 20]">
+<p-table
+  #dt
+  [sortField]="defaultSort"
+  [value]="data"
+  [rows]="20"
+  [paginator]="showPaging"
+  [rowsPerPageOptions]="[10, 20, 50]"
+  [globalFilterFields]="globalFilterFields || []"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} symbols"
+>
+  @if (showCaption) {
+    <ng-template pTemplate="caption">
+      <div class="grid sm:grid-cols-3">
+        <div class="flex items-center justify-between sm:col-span-2 mb-2">
+          <h3 class="font-light text-2xl dark:text-white">{{ title }}</h3>
+          <button label="Clear" class="p-1 dark:text-white" (click)="clear(dt)">
+            <mat-icon>filter_alt_off</mat-icon>
+          </button>
+        </div>
+        <div class="sm:pl-4 sm:col-span-1">
+          <span class="search">
+            <input
+              pInputText
+              type="text"
+              (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+              [placeholder]="searchPlaceholder"
+            />
+            <mat-icon class="dark:text-white">search</mat-icon>
+          </span>
+        </div>
+      </div>
+    </ng-template>
+  }
+
   <ng-template pTemplate="header">
     <tr>
       @for (c of cols; track $index) {
         <th [pSortableColumn]="c.sortable ? c.field : undefined">
-          {{ c.label }} <p-sortIcon [field]="c.field"></p-sortIcon>
+          {{ c.label }}
+          @if (c.sortable) {
+            <p-sortIcon [field]="c.field"></p-sortIcon>
+          }
         </th>
       }
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-row>
-    <tr [routerLink]="['/markets', row.ticker]">
+    <tr [routerLink]="rowLinkFn ? rowLinkFn(row) : null">
       @for (c of cols; track $index) {
         <td>
           @switch (c.type) {
@@ -35,10 +72,9 @@
       }
     </tr>
   </ng-template>
-
   <ng-template pTemplate="emptymessage">
     <tr class="empty">
-      <td colspan="12">
+      <td [attr.colspan]="cols.length">
         <p class="text-center my-20">Currently no data</p>
       </td>
     </tr>

@@ -2,7 +2,7 @@
   @for (tab of tabs; track $index) {
     <mat-tab [label]="tab[0]">
       @if (tab[1] | async; as data) {
-        <md-data-table [data]="data" [cols]="cols"></md-data-table>
+        <md-data-table [data]="data" [cols]="cols" [rowLinkFn]="rowLinkFn"></md-data-table>
       } @else {
         <mat-spinner color="accent" diameter="30"></mat-spinner>
       }

@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { DataTableComponent } from '../../../../core/components/data-table/data-table.component';
 import { SnapshotInfo } from '../../../../core/models/polygon.io.models';
-import { dataTableCols } from '../../../../core/models/tables.models';
+import { dataTableCols, rowLinkGenerator } from '../../../../core/models/tables.models';
 import { getGainersLosers } from '../../../../state/market-data/market-data.actions';
 import {
   selectFavouriteSnapshots,
@@ -27,6 +27,7 @@ export class GainersLosersComponent implements OnInit {
   private losers$: Observable<SnapshotInfo[]> = this.store.select(selectLosers);
   private favourites$: Observable<SnapshotInfo[]> = this.store.select(selectFavouriteSnapshots);
 
+  rowLinkFn = rowLinkGenerator;
   cols = dataTableCols;
   tabs: [string, Observable<SnapshotInfo[]>][] = [
     ['Biggest Gainers', this.gainers$],

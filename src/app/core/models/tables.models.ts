@@ -13,6 +13,8 @@ export interface ColumnConfig {
   sortable?: boolean;
 }
 
+export const rowLinkGenerator = (row: object) => ['/markets', row['ticker' as keyof object]];
+
 export const dataTableCols: ColumnConfig[] = [
   {
     field: 'ticker',
@@ -28,13 +30,13 @@ export const dataTableCols: ColumnConfig[] = [
   },
   {
     field: 'todaysChange',
-    label: 'Chg',
+    label: '1D',
     type: ColumnType.PriceChange,
     sortable: true,
   },
   {
     field: 'todaysChangePerc',
-    label: 'Chg %',
+    label: '1D %',
     type: ColumnType.PriceChange,
     sortable: true,
   },
@@ -45,15 +47,15 @@ export const dataTableCols: ColumnConfig[] = [
     sortable: true,
   },
   {
-    field: 'day.v',
-    label: 'Vol',
-    type: ColumnType.ShortNumber,
+    field: 'day.h',
+    label: 'High',
+    type: ColumnType.Price,
     sortable: true,
   },
   {
-    field: 'prevDay.c',
-    label: 'Prev Close',
-    type: ColumnType.Price,
+    field: 'day.v',
+    label: 'Vol',
+    type: ColumnType.ShortNumber,
     sortable: true,
   },
   {
@@ -63,14 +65,20 @@ export const dataTableCols: ColumnConfig[] = [
     sortable: true,
   },
   {
-    field: 'prevDay.l',
-    label: 'Prev Low',
+    field: 'prevDay.c',
+    label: 'Prev Close',
     type: ColumnType.Price,
     sortable: true,
   },
   {
     field: 'prevDay.h',
     label: 'Prev High',
+    type: ColumnType.Price,
+    sortable: true,
+  },
+  {
+    field: 'prevDay.l',
+    label: 'Prev Low',
     type: ColumnType.Price,
     sortable: true,
   },

@@ -13,9 +13,6 @@ export class StandardTemplateMockComponent {
 @Component({ selector: 'md-favourites-ticker', standalone: true, template: '' })
 export class FavouritesTickerMockComponent {}
 
-@Component({ selector: 'md-all', standalone: true, template: '' })
-export class AllMockComponent {}
-
 @Component({ selector: 'md-search', standalone: true, template: '' })
 export class SearchMockComponent {}
 
@@ -49,6 +46,13 @@ export class PriceSummaryMockComponent {}
 
 @Component({ selector: 'md-data-table', standalone: true, template: '' })
 export class DataTableMockComponent {
-  @Input() data!: unknown;
+  @Input() data!: unknown[];
   @Input() cols!: ColumnConfig[];
+  @Input() defaultSort?: string;
+  @Input() showPaging?: boolean;
+  @Input() showCaption?: boolean;
+  @Input() globalFilterFields?: string[];
+  @Input() title?: string;
+  @Input() searchPlaceholder?: string;
+  @Input() rowLinkFn?: (data: object) => string[];
 }

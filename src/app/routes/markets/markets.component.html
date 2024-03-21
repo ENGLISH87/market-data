@@ -3,6 +3,16 @@
     <md-favourites-ticker></md-favourites-ticker>
   </div>
   <div class="grid-box mb-4 !p-0">
-    <md-all></md-all>
+    <md-data-table
+      [data]="(all$ | async) || []"
+      [cols]="cols"
+      defaultSort="ticker"
+      [showPaging]="true"
+      [showCaption]="true"
+      [rowLinkFn]="linkGenerator"
+      [globalFilterFields]="['ticker']"
+      title="All Symbols"
+      searchPlaceholder="Filter by symbol"
+    ></md-data-table>
   </div>
 </md-standard-template>
